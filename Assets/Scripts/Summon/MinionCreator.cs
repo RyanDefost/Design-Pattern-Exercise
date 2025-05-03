@@ -52,7 +52,7 @@ namespace Summon
             //Check Body Input
             bool validInput = false;
             var inputRange = input.GetRange(0, 3);
-            foreach (var item in bodyType)
+            foreach (var item in this.bodyType)
             {
                 if (Enumerable.SequenceEqual(inputRange, item.Key)) validInput = true;
             }
@@ -61,7 +61,7 @@ namespace Summon
 
             //Check Attack Input
             validInput = false;
-            foreach (var item in damageType)
+            foreach (var item in this.damageType)
             {
                 if (input[3] == item.Key) validInput = true;
             }
@@ -69,7 +69,7 @@ namespace Summon
 
             //Check Defense Input
             validInput = false;
-            foreach (var item in defenseType)
+            foreach (var item in this.defenseType)
             {
                 if (input[4] == item.Key) validInput = true;
             }
@@ -80,16 +80,16 @@ namespace Summon
 
         public Minion TrySetAttributes(Minion minion)
         {
-            if (!CheckValidInput(inputQueue.CurrentQueue)) return minion;
+            if (!CheckValidInput(this.inputQueue.CurrentQueue)) return minion;
 
 
-            damageType.TryGetValue(inputQueue.CurrentQueue[4], out int damage);
-            defenseType.TryGetValue(inputQueue.CurrentQueue[3], out int defense);
+            this.damageType.TryGetValue(this.inputQueue.CurrentQueue[4], out int damage);
+            this.defenseType.TryGetValue(this.inputQueue.CurrentQueue[3], out int defense);
 
             MinionType minionType = MinionType.NONE;
             foreach (var item in bodyType)
             {
-                if (Enumerable.SequenceEqual(inputQueue.CurrentQueue.GetRange(0, 3), item.Key))
+                if (Enumerable.SequenceEqual(this.inputQueue.CurrentQueue.GetRange(0, 3), item.Key))
                 {
                     minionType = item.Value;
                 }

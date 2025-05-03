@@ -5,13 +5,13 @@ namespace Project.ObjectPool
 {
     public class ObjectPool<T> where T : IPoolable
     {
-        private List<T> _activePool = new List<T>();
-        private List<T> _inactivePool = new List<T>();
+        private List<T> activePool = new List<T>();
+        private List<T> inactivePool = new List<T>();
 
         public T AddObject()
         {
             T instance = (T)Activator.CreateInstance(typeof(T));
-            _inactivePool.Add(instance);
+            this.inactivePool.Add(instance);
 
             return instance;
         }
@@ -21,11 +21,11 @@ namespace Project.ObjectPool
             item.OnEnableObject();
             item.Active = true;
 
-            if (_inactivePool.Contains(item))
+            if (this.inactivePool.Contains(item))
             {
-                _inactivePool.Remove(item);
+                this.inactivePool.Remove(item);
             }
-            _activePool.Add(item);
+            this.activePool.Add(item);
             return item;
         }
 
@@ -34,19 +34,19 @@ namespace Project.ObjectPool
             item.OnDisableObject();
             item.Active = false;
 
-            if (_activePool.Contains(item))
+            if (this.activePool.Contains(item))
             {
-                _activePool.Remove(item);
+                this.activePool.Remove(item);
             }
-            _inactivePool.Add(item);
+            this.inactivePool.Add(item);
             return item;
         }
 
         public T RequestObject()
         {
-            if (_inactivePool.Count > 0)
+            if (this.inactivePool.Count > 0)
             {
-                return ActivateObject(_inactivePool[0]);
+                return ActivateObject(this.inactivePool[0]);
             }
             return ActivateObject(AddObject());
         }
@@ -54,8 +54,8 @@ namespace Project.ObjectPool
         public List<T> GetAllItems()
         {
             List<T> ItemList = new List<T>();
-            ItemList.AddRange(_activePool);
-            ItemList.AddRange(_inactivePool);
+            ItemList.AddRange(this.activePool);
+            ItemList.AddRange(this.inactivePool);
 
             return ItemList;
         }

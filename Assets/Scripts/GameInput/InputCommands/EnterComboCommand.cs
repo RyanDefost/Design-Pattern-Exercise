@@ -9,7 +9,7 @@ namespace Project.GameInput
 
         public void Execute(InputHandler inputHandler)
         {
-            inputHandler.inputQueue.SetCurrentQueue();
+            inputHandler.InputQueue.SetCurrentQueue();
 
             Debug.Log("ENTER Command");
         }

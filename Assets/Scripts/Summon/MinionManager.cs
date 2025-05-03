@@ -12,8 +12,6 @@ namespace Project.Summon
     {
         public List<Minion> minions { get; private set; }
 
-        [SerializeField] private List<KeyCode> spawnCode = new List<KeyCode>();
-
         private ObjectPool<Minion> objectPool;
         private MinionCreator minionCreator;
         private InputQueue inputQueue;
@@ -23,25 +21,16 @@ namespace Project.Summon
             this.inputQueue = new InputQueue();
             this.objectPool = new ObjectPool<Minion>();
             this.minionCreator = new MinionCreator(this.inputQueue);
-        }
 
-        public void Awake()
-        {
             this.inputQueue.OnSetCurrentQueue += CheckQueue;
         }
 
         private void Update()
         {
             this.inputQueue.UpdateQueue();
+            UpdateMinions();
         }
 
-        private void CheckQueue()
-        {
-            if (minionCreator.CheckValidInput(inputQueue.CurrentQueue))
-            {
-                ActivateMinion();
-            }
-        }
 
         public void ActivateMinion()
         {
@@ -49,8 +38,31 @@ namespace Project.Summon
 
             minion = this.minionCreator.TrySetAttributes(minion);
 
-            minion._gameObject.name = (minion.minionTypes + "_Minion" + " AT: " + minion.Damage + " DEF: " + minion.Defense); //TEMP
             StartCoroutine(test(minion)); //TEMMP
+        }
+
+
+        public void DeactivateMinion(Minion minion)
+        {
+            this.objectPool.DeactivateObject(minion);
+
+            Debug.Log("DEACTIVATE: " + minion.Damage);
+        }
+
+        public List<Minion> GetAllMinions()
+        {
+            return this.objectPool.GetAllItems();
+        }
+
+        private void UpdateMinions()
+        {
+            foreach (var minion in GetAllMinions())
+            {
+                if (minion.Active)
+                {
+                    minion.UpdateMinion();
+                }
+            }
         }
 
         //REMOVE FUNCTION
@@ -60,16 +72,12 @@ namespace Project.Summon
             DeactivateMinion(minion);
         }
 
-        public void DeactivateMinion(Minion minion)
+        private void CheckQueue()
         {
-            this.objectPool.DeactivateObject(minion);
-
-            Debug.Log("DEACTIVATE: " + minion.Damage);
-        }
-
-        public void GetActiveMinion(Minion minion)
-        {
-            this.objectPool.GetAllItems();
+            if (minionCreator.CheckValidInput(inputQueue.CurrentQueue))
+            {
+                ActivateMinion();
+            }
         }
     }
 }

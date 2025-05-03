@@ -11,14 +11,14 @@ namespace Project.GameInput
         public ICommand RightCommand;
         public ICommand EnterCommand;
 
-        public KeyCode currentKey { get; private set; }
-        public InputQueue inputQueue { get; private set; }
+        public KeyCode CurrentKey { get; private set; }
+        public InputQueue InputQueue { get; private set; }
 
         private List<KeyCommands> keyCommands = new List<KeyCommands>();
 
         public InputHandler(InputQueue queue)
         {
-            inputQueue = queue;
+            this.InputQueue = queue;
 
             BindInputToCommand(KeyCode.UpArrow, new UpComboCommand());
             BindInputToCommand(KeyCode.DownArrow, new DownComboCommand());
@@ -30,11 +30,11 @@ namespace Project.GameInput
 
         public void HandleInput()
         {
-            foreach (var keyCommand in keyCommands)
+            foreach (var keyCommand in this.keyCommands)
             {
                 if (Input.GetKeyDown(keyCommand.key))
                 {
-                    currentKey = keyCommand.key;
+                    this.CurrentKey = keyCommand.key;
 
                     keyCommand.command.Execute(this);
                 }
@@ -43,7 +43,7 @@ namespace Project.GameInput
 
         public void BindInputToCommand(KeyCode keycode, ICommand command)
         {
-            keyCommands.Add(new KeyCommands()
+            this.keyCommands.Add(new KeyCommands()
             {
                 key = keycode,
                 command = command
@@ -52,11 +52,11 @@ namespace Project.GameInput
 
         public void UnBindInput(KeyCode keycode)
         {
-            var items = keyCommands.FindAll(x => x.key == keycode);
-            items.ForEach(x => keyCommands.Remove(x));
+            var items = this.keyCommands.FindAll(x => x.key == keycode);
+            items.ForEach(x => this.keyCommands.Remove(x));
         }
 
-        public List<KeyCommands> GetKeyCommands() { return keyCommands; }
+        public List<KeyCommands> GetKeyCommands() { return this.keyCommands; }
     }
 
     public class KeyCommands

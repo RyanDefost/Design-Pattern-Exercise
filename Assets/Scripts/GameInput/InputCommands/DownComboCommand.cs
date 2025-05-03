@@ -10,8 +10,8 @@ namespace Project.GameInput
 
         public void Execute(InputHandler inputHandler)
         {
-            OnExecute?.Invoke();
-            OnExecuteKey?.Invoke(inputHandler.currentKey);
+            this.OnExecute?.Invoke();
+            this.OnExecuteKey?.Invoke(inputHandler.CurrentKey);
 
             Debug.Log("DOWN Command");
         }

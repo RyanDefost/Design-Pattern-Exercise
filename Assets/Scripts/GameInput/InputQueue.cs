@@ -11,53 +11,53 @@ namespace Project.GameInput
 
         private InputHandler inputHandler;
 
-        private List<KeyCode> _inputQueue = new List<KeyCode>();
-        private int _queueSize = 5;
+        private List<KeyCode> inputQueue = new List<KeyCode>();
+        private int queueSize = 5;
 
         public InputQueue()
         {
-            inputHandler = new InputHandler(this);
+            this.inputHandler = new InputHandler(this);
 
             TryAssignAllQueueable();
         }
 
         public void UpdateQueue()
         {
-            inputHandler.HandleInput();
+            this.inputHandler.HandleInput();
         }
 
         public void SaveInputToQueue(KeyCode key)
         {
-            _inputQueue.Add(key);
+            this.inputQueue.Add(key);
             RemoveLastInputFromQueue();
         }
 
         public void RemoveLastInputFromQueue()
         {
-            while (_inputQueue.Count > _queueSize)
+            while (this.inputQueue.Count > this.queueSize)
             {
-                _inputQueue.RemoveAt(0);
+                this.inputQueue.RemoveAt(0);
             }
         }
 
         public void SetCurrentQueue()
         {
-            if (_inputQueue.Count <= 0) return;
-            if (CurrentQueue == null) CurrentQueue = new List<KeyCode>();
+            if (this.inputQueue.Count <= 0) return;
+            if (CurrentQueue == null) this.CurrentQueue = new List<KeyCode>();
 
-            CurrentQueue.Clear();
-            CurrentQueue.AddRange(_inputQueue);
+            this.CurrentQueue.Clear();
+            this.CurrentQueue.AddRange(this.inputQueue);
 
-            _inputQueue.Clear();
+            this.inputQueue.Clear();
 
-            OnSetCurrentQueue?.Invoke();
+            this.OnSetCurrentQueue?.Invoke();
         }
 
         private void TryAssignAllQueueable()
         {
-            if (inputHandler == null) return;
+            if (this.inputHandler == null) return;
 
-            foreach (var keyCommand in inputHandler.GetKeyCommands())
+            foreach (var keyCommand in this.inputHandler.GetKeyCommands())
             {
                 if (keyCommand.command is IQueueable)
                 {
