@@ -5,7 +5,7 @@
         public int Damage { get; set; }
         public int Defense { get; set; }
 
-        public MinionDecorator(int damage = 1, int defense = 1)
+        public MinionDecorator(int damage = 2, int defense = 2)
         {
             Damage = damage;
             Defense = defense;

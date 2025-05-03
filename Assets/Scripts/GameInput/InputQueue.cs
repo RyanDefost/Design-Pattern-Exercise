@@ -50,7 +50,6 @@ namespace Project.GameInput
 
             _inputQueue.Clear();
 
-            Debug.Log("SETTING C_QUEUE: " + CurrentQueue);
             OnSetCurrentQueue?.Invoke();
         }
 
