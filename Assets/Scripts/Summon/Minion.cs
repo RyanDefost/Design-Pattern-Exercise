@@ -13,7 +13,6 @@ namespace Project.Summon
 
         public GameObject gameObject = new GameObject();
 
-
         public Minion()
         {
             this.gameObject.name = "Minion";

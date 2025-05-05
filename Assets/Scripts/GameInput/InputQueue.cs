@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.GameInput
 {
-    public class InputQueue
+    public class InputQueue : GameBehaviour
     {
         public List<KeyCode> CurrentQueue { get; private set; }
         public Action OnSetCurrentQueue;
@@ -21,7 +22,7 @@ namespace Project.GameInput
             TryAssignAllQueueable();
         }
 
-        public void UpdateQueue()
+        public override void Update()
         {
             this.inputHandler.HandleInput();
         }

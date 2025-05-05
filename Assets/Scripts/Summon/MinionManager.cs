@@ -1,14 +1,13 @@
 ﻿using Project.GameInput;
+using Project.GameLogic;
 using Project.ObjectPool;
 using Summon;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Project.Summon
 {
 
-    public class MinionManager : MonoBehaviour
+    public class MinionManager : GameBehaviour
     {
         public List<Minion> minions { get; private set; }
 
@@ -25,9 +24,9 @@ namespace Project.Summon
             this.inputQueue.OnSetCurrentQueue += CheckQueue;
         }
 
-        private void Update()
+        public override void Update()
         {
-            this.inputQueue.UpdateQueue();
+            //this.inputQueue.UpdateQueue();
             UpdateMinions();
         }
 
@@ -37,16 +36,12 @@ namespace Project.Summon
             Minion minion = this.objectPool.RequestObject();
 
             minion = this.minionCreator.TrySetAttributes(minion);
-
-            StartCoroutine(test(minion)); //TEMMP
         }
 
 
         public void DeactivateMinion(Minion minion)
         {
             this.objectPool.DeactivateObject(minion);
-
-            Debug.Log("DEACTIVATE: " + minion.Damage);
         }
 
         public List<Minion> GetAllMinions()
@@ -63,13 +58,6 @@ namespace Project.Summon
                     minion.UpdateMinion();
                 }
             }
-        }
-
-        //REMOVE FUNCTION
-        private IEnumerator test(Minion minion)
-        {
-            yield return new WaitForSeconds(5);
-            DeactivateMinion(minion);
         }
 
         private void CheckQueue()
