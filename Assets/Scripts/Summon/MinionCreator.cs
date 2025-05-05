@@ -1,11 +1,10 @@
 ﻿using Project.GameInput;
-using Project.Summon;
 using Project.Summon.Decorator;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Summon
+namespace Project.Summon
 {
     public class MinionCreator
     {
