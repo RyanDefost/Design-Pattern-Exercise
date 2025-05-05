@@ -24,6 +24,8 @@ namespace Project.GameLogic
         private void InstaniatieScripts()
         {
             this.minionManager = new MinionManager();
+
+            //Expand ...
         }
     }
 }

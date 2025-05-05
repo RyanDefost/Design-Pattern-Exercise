@@ -1,4 +1,6 @@
-﻿namespace Project.GameLogic
+﻿// Ignore Spelling: Behaviour
+
+namespace Project.GameLogic
 {
     public abstract class GameBehaviour
     {
