@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Project
+namespace Project.Spawner
 {
     /// <summary>
     /// DOES NOT WORK YET! Component values aren't set to the GameObject.

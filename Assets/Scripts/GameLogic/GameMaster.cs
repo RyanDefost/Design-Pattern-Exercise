@@ -7,7 +7,6 @@ namespace Project.GameLogic
     public class GameMaster : MonoBehaviour, ISingleton<GameMaster>
     {
         public Action OnUpdate;
-        public Action OnStart;
 
         private MinionManager minionManager;
 

@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: Behaviour
-
-namespace Project.GameLogic
+﻿namespace Project.GameLogic
 {
     public abstract class GameBehaviour
     {
@@ -16,11 +14,8 @@ namespace Project.GameLogic
         private void AssignToGameMaster()
         {
             this.gameMaster.OnUpdate += Update;
-            this.gameMaster.OnStart += Start;
         }
 
         public virtual void Update() { }
-
-        public virtual void Start() { } //NOT YET HOOKED UP
     }
 }

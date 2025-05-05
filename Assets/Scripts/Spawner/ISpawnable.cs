@@ -1,4 +1,4 @@
-﻿namespace Project
+﻿namespace Project.Spawner
 {
     public interface ISpawnable
     {

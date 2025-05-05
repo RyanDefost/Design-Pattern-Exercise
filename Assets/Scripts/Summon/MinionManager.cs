@@ -1,12 +1,10 @@
 ﻿using Project.GameInput;
 using Project.GameLogic;
 using Project.ObjectPool;
-using Summon;
 using System.Collections.Generic;
 
 namespace Project.Summon
 {
-
     public class MinionManager : GameBehaviour
     {
         public List<Minion> minions { get; private set; }
