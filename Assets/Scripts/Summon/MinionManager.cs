@@ -24,10 +24,8 @@ namespace Project.Summon
 
         public override void Update()
         {
-            //this.inputQueue.UpdateQueue();
             UpdateMinions();
         }
-
 
         public void ActivateMinion()
         {
@@ -35,7 +33,6 @@ namespace Project.Summon
 
             minion = this.minionCreator.TrySetAttributes(minion);
         }
-
 
         public void DeactivateMinion(Minion minion)
         {
