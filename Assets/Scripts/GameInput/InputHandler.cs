@@ -5,27 +5,15 @@ namespace Project.GameInput
 {
     public class InputHandler
     {
-        public ICommand UpCommand;
-        public ICommand DownCommand;
-        public ICommand LeftCommand;
-        public ICommand RightCommand;
-        public ICommand EnterCommand;
-
         public KeyCode CurrentKey { get; private set; }
-        public InputQueue InputQueue { get; private set; }
+        public IInputReceiver inputReceiver { get; private set; }
 
         private List<KeyCommands> keyCommands = new List<KeyCommands>();
 
-        public InputHandler(InputQueue queue)
+        public InputHandler(IInputReceiver inputReceiver)
         {
-            this.InputQueue = queue;
-
-            BindInputToCommand(KeyCode.UpArrow, new UpComboCommand());
-            BindInputToCommand(KeyCode.DownArrow, new DownComboCommand());
-            BindInputToCommand(KeyCode.LeftArrow, new LeftComboCommand());
-            BindInputToCommand(KeyCode.RightArrow, new RightComboCommand());
-
-            BindInputToCommand(KeyCode.Space, new EnterComboCommand());
+            Debug.Log("GetHERE");
+            this.inputReceiver = inputReceiver;
         }
 
         public void HandleInput()

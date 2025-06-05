@@ -2,6 +2,7 @@
 using Project.GameLogic;
 using Project.ObjectPool;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Project.Summon
 {
@@ -9,21 +10,19 @@ namespace Project.Summon
     {
         public List<Minion> minions { get; private set; }
 
-        private ObjectPool<Minion> objectPool;
+        private InputQueue inputQueue = new InputQueue();
+        private ObjectPool<Minion> objectPool = new ObjectPool<Minion>();
         private MinionCreator minionCreator;
-        private InputQueue inputQueue;
 
         public MinionManager()
         {
-            this.inputQueue = new InputQueue();
-            this.objectPool = new ObjectPool<Minion>();
             this.minionCreator = new MinionCreator(this.inputQueue);
-
             this.inputQueue.OnSetCurrentQueue += CheckQueue;
         }
 
         public override void Update()
         {
+            this.inputQueue.UpdateInputQueue();
             UpdateMinions();
         }
 
@@ -57,6 +56,7 @@ namespace Project.Summon
 
         private void CheckQueue()
         {
+            Debug.Log("Recieved!");
             if (minionCreator.CheckValidInput(inputQueue.CurrentQueue))
             {
                 ActivateMinion();

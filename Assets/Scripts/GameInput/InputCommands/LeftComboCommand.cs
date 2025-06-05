@@ -10,10 +10,14 @@ namespace Project.GameInput
 
         public void Execute(InputHandler inputHandler)
         {
+            var actor = (InputQueue)inputHandler.inputReceiver;
+
+            actor.SaveInputToQueue(inputHandler.CurrentKey);
+
+            Debug.Log("LEFT Command");
             this.OnExecute?.Invoke();
             this.OnExecuteKey?.Invoke(inputHandler.CurrentKey);
 
-            Debug.Log("LEFT Command");
         }
     }
 }

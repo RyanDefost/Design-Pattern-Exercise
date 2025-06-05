@@ -1,18 +1,16 @@
-﻿using Project.ObjectPool;
+﻿using Project.GameLogic;
+using Project.ObjectPool;
 using Project.Spawner;
-using UnityEngine;
 
 namespace Project.Summon
 {
-    public class Minion : IPoolable, ISpawnable
+    public class Minion : Entity, IPoolable, ISpawnable
     {
         public bool Active { get; set; }
 
         public int Damage = 1;
         public int Defense = 1;
         public MinionType minionTypes;
-
-        public GameObject gameObject = new GameObject();
 
         public Minion()
         {

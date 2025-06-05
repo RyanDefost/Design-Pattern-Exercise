@@ -9,9 +9,12 @@ namespace Project.GameInput
 
         public void Execute(InputHandler inputHandler)
         {
-            inputHandler.InputQueue.SetCurrentQueue();
+            var actor = (InputQueue)inputHandler.inputReceiver;
+
+            actor.SetCurrentQueue();
 
             Debug.Log("ENTER Command");
+            OnExecute?.Invoke();
         }
     }
 }

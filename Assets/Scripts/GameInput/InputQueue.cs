@@ -1,30 +1,41 @@
-﻿using Project.GameLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.GameInput
 {
-    public class InputQueue : GameBehaviour
+    public class InputQueue : IInputReceiver
     {
         public List<KeyCode> CurrentQueue { get; private set; }
         public Action OnSetCurrentQueue;
 
-        private InputHandler inputHandler;
-
         private List<KeyCode> inputQueue = new List<KeyCode>();
         private int queueSize = 5;
+
+        private InputHandler inputHandler;
+        private UpComboCommand upComboCommand = new UpComboCommand();
+        private DownComboCommand downComboCommand = new DownComboCommand();
+        private LeftComboCommand leftComboCommand = new LeftComboCommand();
+        private RightComboCommand rightComboCommand = new RightComboCommand();
+        private EnterComboCommand enterComboCommand = new EnterComboCommand();
+
 
         public InputQueue()
         {
             this.inputHandler = new InputHandler(this);
+            this.inputHandler.BindInputToCommand(KeyCode.UpArrow, upComboCommand);
+            this.inputHandler.BindInputToCommand(KeyCode.DownArrow, downComboCommand);
+            this.inputHandler.BindInputToCommand(KeyCode.LeftArrow, leftComboCommand);
+            this.inputHandler.BindInputToCommand(KeyCode.RightArrow, rightComboCommand);
 
-            TryAssignAllQueueable();
+            this.inputHandler.BindInputToCommand(KeyCode.Space, enterComboCommand);
+
+            //TryAssignAllQueueable();
         }
 
-        public override void Update()
+        public void UpdateInputQueue()
         {
-            this.inputHandler.HandleInput();
+            inputHandler.HandleInput();
         }
 
         public void SaveInputToQueue(KeyCode key)
@@ -51,6 +62,7 @@ namespace Project.GameInput
 
             this.inputQueue.Clear();
 
+            Debug.Log("Invoke");
             this.OnSetCurrentQueue?.Invoke();
         }
 

@@ -1,4 +1,5 @@
-﻿using Project.Summon;
+﻿using Project.Player;
+using Project.Summon;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Project.GameLogic
         public Action OnUpdate;
 
         private MinionManager minionManager;
+        private PlayerManager playerManager;
 
         private void Start()
         {
@@ -23,7 +25,7 @@ namespace Project.GameLogic
         private void InstaniatieScripts()
         {
             this.minionManager = new MinionManager();
-
+            this.playerManager = new PlayerManager();
             //Expand ...
         }
     }
