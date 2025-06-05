@@ -1,4 +1,4 @@
-﻿using Project.GameInput;
+﻿using Project.Player;
 using Project.Summon.Decorator;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +8,18 @@ namespace Project.Summon
 {
     public class MinionCreator
     {
+        private ICaster caster;
+
         private Dictionary<List<KeyCode>, MinionType> bodyType;
         private Dictionary<KeyCode, int> damageType;
         private Dictionary<KeyCode, int> defenseType;
 
-        private InputQueue inputQueue;
+        //
+        private Dictionary<KeyCode, MinionDecorator> typing;
 
-        public MinionCreator(InputQueue inputQueue)
+        public MinionCreator(ICaster caster)
         {
-            this.inputQueue = inputQueue;
+            this.caster = caster;
 
             this.bodyType = new Dictionary<List<KeyCode>, MinionType>
             {
@@ -36,59 +39,38 @@ namespace Project.Summon
 
             this.defenseType = new Dictionary<KeyCode, int>
             {
-                {KeyCode.UpArrow,    5},
-                {KeyCode.DownArrow,  4},
-                {KeyCode.LeftArrow,  4},
-                {KeyCode.RightArrow, 2},
+                {KeyCode.UpArrow,    5}, //Water
+                {KeyCode.DownArrow,  4}, //Earth
+                {KeyCode.LeftArrow,  4}, //Fire
+                {KeyCode.RightArrow, 2}, //Air
             };
+
 
         }
 
-        public bool CheckValidInput(List<KeyCode> input)
+        public Minion SetValues(Minion minion) //FIRST STEP TO CREATE MINION
         {
-            if (input.Count != 5) return false;
-
-            //Check Body Input
-            bool validInput = false;
-            var inputRange = input.GetRange(0, 3);
-            foreach (var item in this.bodyType)
+            foreach (var item in typing)
             {
-                if (Enumerable.SequenceEqual(inputRange, item.Key)) validInput = true;
+                if (caster.InputQueue.CurrentQueue[0] == item.Key)
+                {
+                    item.Value.Decorate(minion);
+                }
             }
-            if (validInput == false) return false;
 
 
-            //Check Attack Input
-            validInput = false;
-            foreach (var item in this.damageType)
-            {
-                if (input[3] == item.Key) validInput = true;
-            }
-            if (validInput == false) return false;
-
-            //Check Defense Input
-            validInput = false;
-            foreach (var item in this.defenseType)
-            {
-                if (input[4] == item.Key) validInput = true;
-            }
-            if (validInput == false) return false;
-
-            return true;
+            return minion;
         }
 
         public Minion TrySetAttributes(Minion minion)
         {
-            if (!CheckValidInput(this.inputQueue.CurrentQueue)) return minion;
-
-
-            this.damageType.TryGetValue(this.inputQueue.CurrentQueue[4], out int damage);
-            this.defenseType.TryGetValue(this.inputQueue.CurrentQueue[3], out int defense);
+            this.damageType.TryGetValue(this.caster.InputQueue.CurrentQueue[4], out int damage);
+            this.defenseType.TryGetValue(this.caster.InputQueue.CurrentQueue[3], out int defense);
 
             MinionType minionType = MinionType.NONE;
             foreach (var item in bodyType)
             {
-                if (Enumerable.SequenceEqual(this.inputQueue.CurrentQueue.GetRange(0, 3), item.Key))
+                if (Enumerable.SequenceEqual(this.caster.InputQueue.CurrentQueue.GetRange(0, 3), item.Key))
                 {
                     minionType = item.Value;
                 }
@@ -114,6 +96,10 @@ namespace Project.Summon
                 MinionAirDecorator Airdecorator = new MinionAirDecorator(damage, defense);
                 minion = Airdecorator.Decorate(minion);
             }
+
+            minion.SetColor(caster.PlayerData.teamColor);
+            minion.SetScale(new Vector2(.5f, .5f));
+            minion.SetPosition(caster.Position);
 
             return minion;
         }

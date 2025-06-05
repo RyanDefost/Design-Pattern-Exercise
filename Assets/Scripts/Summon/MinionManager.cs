@@ -1,36 +1,30 @@
-﻿using Project.GameInput;
-using Project.GameLogic;
+﻿using Project.GameLogic;
 using Project.ObjectPool;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Project.Summon
 {
-    public class MinionManager : GameBehaviour
+    public class MinionManager : GameBehaviour, ISingleton<MinionManager>
     {
         public List<Minion> minions { get; private set; }
 
-        private InputQueue inputQueue = new InputQueue();
         private ObjectPool<Minion> objectPool = new ObjectPool<Minion>();
-        private MinionCreator minionCreator;
 
         public MinionManager()
         {
-            this.minionCreator = new MinionCreator(this.inputQueue);
-            this.inputQueue.OnSetCurrentQueue += CheckQueue;
+            ISingleton<MinionManager>.instance = this;
         }
 
         public override void Update()
         {
-            this.inputQueue.UpdateInputQueue();
             UpdateMinions();
         }
 
-        public void ActivateMinion()
+        public void ActivateMinion(MinionCreator minionCreator)
         {
             Minion minion = this.objectPool.RequestObject();
 
-            minion = this.minionCreator.TrySetAttributes(minion);
+            minionCreator.TrySetAttributes(minion);
         }
 
         public void DeactivateMinion(Minion minion)
@@ -51,15 +45,6 @@ namespace Project.Summon
                 {
                     minion.UpdateMinion();
                 }
-            }
-        }
-
-        private void CheckQueue()
-        {
-            Debug.Log("Recieved!");
-            if (minionCreator.CheckValidInput(inputQueue.CurrentQueue))
-            {
-                ActivateMinion();
             }
         }
     }

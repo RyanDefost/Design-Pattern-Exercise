@@ -1,12 +1,15 @@
 ﻿using Project.GameLogic;
 using Project.ObjectPool;
 using Project.Spawner;
+using UnityEngine;
 
 namespace Project.Summon
 {
     public class Minion : Entity, IPoolable, ISpawnable
     {
         public bool Active { get; set; }
+
+        public Color teamColor;
 
         public int Damage = 1;
         public int Defense = 1;
@@ -35,6 +38,11 @@ namespace Project.Summon
         public void OnEnableObject()
         {
             this.gameObject.SetActive(true);
+        }
+
+        public void SetColor(Color color)
+        {
+            this.spriteRenderer.color = color;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Project.GameInput.MovementInput
         {
             var actor = (Entity)inputHandler.inputReceiver;
 
-            actor.AddPosition(direction);
+            actor.AddPosition(direction * Time.deltaTime);
 
             Debug.Log($"Move {direction} Command");
             this.OnExecute?.Invoke();

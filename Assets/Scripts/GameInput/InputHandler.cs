@@ -12,7 +12,6 @@ namespace Project.GameInput
 
         public InputHandler(IInputReceiver inputReceiver)
         {
-            Debug.Log("GetHERE");
             this.inputReceiver = inputReceiver;
         }
 
@@ -20,7 +19,14 @@ namespace Project.GameInput
         {
             foreach (var keyCommand in this.keyCommands)
             {
-                if (Input.GetKeyDown(keyCommand.key))
+                if (Input.GetKeyDown(keyCommand.key) && !keyCommand.isHolding)
+                {
+                    this.CurrentKey = keyCommand.key;
+
+                    keyCommand.command.Execute(this);
+                }
+
+                if (Input.GetKey(keyCommand.key) && keyCommand.isHolding)
                 {
                     this.CurrentKey = keyCommand.key;
 
@@ -29,12 +35,13 @@ namespace Project.GameInput
             }
         }
 
-        public void BindInputToCommand(KeyCode keycode, ICommand command)
+        public void BindInputToCommand(KeyCode keycode, ICommand command, bool isHolding = false)
         {
             this.keyCommands.Add(new KeyCommands()
             {
                 key = keycode,
-                command = command
+                command = command,
+                isHolding = isHolding
             });
         }
 
@@ -51,5 +58,6 @@ namespace Project.GameInput
     {
         public KeyCode key;
         public ICommand command;
+        public bool isHolding;
     }
 }

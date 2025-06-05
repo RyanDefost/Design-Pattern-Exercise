@@ -30,6 +30,7 @@ namespace Project.GameLogic
             this.gameObject.transform.position = position;
         }
 
+
         public void SetRotation(Vector3 rotation)
         {
             this.gameObject.transform.eulerAngles = rotation;
@@ -39,5 +40,8 @@ namespace Project.GameLogic
         {
             this.gameObject.transform.localScale = scale;
         }
+
+        public Vector2 GetPosition() => gameObject.transform.position;
+        public Vector2 GetScale() => gameObject.transform.lossyScale;
     }
 }
