@@ -1,6 +1,7 @@
 ﻿using Project.GameLogic;
 using Project.ObjectPool;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Project.Summon
 {
@@ -20,11 +21,22 @@ namespace Project.Summon
             UpdateMinions();
         }
 
-        public void ActivateMinion(MinionCreator minionCreator)
+        public void CreateMinion(MinionCreator minionCreator)
+        {
+            MinionData minionData = new MinionData();
+            minionData = minionCreator.SetValues(minionData);
+
+            Debug.Log(minionData.platoonSize);
+            for (int i = 0; i < minionData.platoonSize; i++)
+            {
+                ActivateMinion(minionData);
+            }
+        }
+
+        public void ActivateMinion(MinionData minionData)
         {
             Minion minion = this.objectPool.RequestObject();
-
-            minionCreator.TrySetAttributes(minion);
+            minion.minionData = minionData;
         }
 
         public void DeactivateMinion(Minion minion)

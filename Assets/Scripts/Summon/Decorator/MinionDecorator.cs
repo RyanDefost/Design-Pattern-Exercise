@@ -2,15 +2,13 @@
 {
     public abstract class MinionDecorator
     {
-        public int Damage { get; set; }
-        public int Defense { get; set; }
+        protected MinionType minionType;
 
-        public MinionDecorator(int damage = 2, int defense = 2)
+        public MinionDecorator(MinionType minionType)
         {
-            Damage = damage;
-            Defense = defense;
+            this.minionType = minionType;
         }
 
-        public abstract Minion Decorate(Minion minion);
+        public abstract MinionData Decorate(MinionData minionData);
     }
 }

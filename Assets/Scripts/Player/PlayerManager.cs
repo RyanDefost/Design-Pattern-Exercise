@@ -12,14 +12,14 @@ namespace Project.Player
         {
             PlayerData player1 = new PlayerData();
             player1.Name = "Player 1";
-            player1.teamColor = Color.blue;
+            player1.team = Color.blue;
             player1.spawnPosition = new Vector2(10, 0);
             player1.inputCodes = new KeyCode[4] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D };
             SpawnPlayer(player1);
 
             PlayerData player2 = new PlayerData();
             player2.Name = "Player 2";
-            player2.teamColor = Color.red;
+            player2.team = Color.red;
             player2.spawnPosition = new Vector2(-10, 0);
             player2.inputCodes = new KeyCode[4] { KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L };
             SpawnPlayer(player2);

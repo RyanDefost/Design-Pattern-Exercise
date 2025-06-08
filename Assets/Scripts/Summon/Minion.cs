@@ -1,6 +1,9 @@
 ﻿using Project.GameLogic;
 using Project.ObjectPool;
+using Project.Player;
 using Project.Spawner;
+using Project.Summon.Abilities;
+using System;
 using UnityEngine;
 
 namespace Project.Summon
@@ -8,31 +11,27 @@ namespace Project.Summon
     public class Minion : Entity, IPoolable, ISpawnable
     {
         public bool Active { get; set; }
-
-        public Color teamColor;
-
-        public int Damage = 1;
-        public int Defense = 1;
-        public MinionType minionTypes;
+        public MinionData minionData;
 
         public Minion()
         {
-            this.gameObject.name = "Minion";
+            this.gameObject.name = "minion";
         }
 
         public void UpdateMinion()
         {
-            this.gameObject.name = (this.minionTypes + "_Minion" + " AT: " + this.Damage + " DEF: " + this.Defense);
+            this.gameObject.name = (
+                this.minionData.caster.PlayerData.Name + "_Minion"
+                + " AT: " + this.minionData.Damage
+                + " DEF: " + this.minionData.Defense
+            );
         }
 
         public void OnDisableObject()
         {
             this.gameObject.SetActive(false);
 
-            this.Damage = 1;
-            this.Defense = 1;
-            this.minionTypes = MinionType.NONE;
-            this.gameObject.name = "Minion";
+            this.gameObject.name = "minion";
         }
 
         public void OnEnableObject()
@@ -44,5 +43,23 @@ namespace Project.Summon
         {
             this.spriteRenderer.color = color;
         }
+    }
+
+    public struct MinionData
+    {
+        public ICaster caster;
+        public int platoonSize;
+
+        public float Damage;
+        public float Defense;
+        public float Speed;
+        public float size;
+        public float areaOfEffect;
+
+        public IAbility ability;
+
+        public float timer;
+        public Action<Minion> OnDeath;
+        public Action<Minion> OnSpawn;
     }
 }

@@ -9,10 +9,11 @@ namespace Project.Player
     public class Player : Entity, IInputReceiver, ICaster
     {
         public Vector2 Position { get => this.gameObject.transform.position; }
+        public Color Team { get => PlayerData.team; }
+
         public PlayerData PlayerData { get; set; }
         public InputQueue InputQueue { get; set; }
         public MinionCreator MinionCreator { get; set; }
-
 
         private MinionManager MinionManager = ISingleton<MinionManager>.Instance();
 
@@ -29,7 +30,7 @@ namespace Project.Player
 
             this.PlayerData = data;
 
-            this.spriteRenderer.color = PlayerData.teamColor;
+            this.spriteRenderer.color = PlayerData.team;
             this.gameObject.name = data.Name;
 
             this.inputHandler = new InputHandler(this);
@@ -56,14 +57,14 @@ namespace Project.Player
 
         private void Cast()
         {
-            this.MinionManager.ActivateMinion(this.MinionCreator);
+            this.MinionManager.CreateMinion(this.MinionCreator);
         }
     }
 
     public struct PlayerData
     {
         public string Name;
-        public Color teamColor;
+        public Color team;
         public Vector2 spawnPosition;
 
         public KeyCode[] inputCodes;
