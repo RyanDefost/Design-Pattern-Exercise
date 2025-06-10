@@ -1,16 +1,17 @@
 ﻿using Project.GameLogic;
+using Project.GameLogic.ServiceLocator;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Player
 {
-    public class PlayerManager : GameBehaviour, ISingleton<PlayerManager>
+    public class PlayerManager : GameBehaviour
     {
         private List<Player> players = new List<Player>();
 
         public PlayerManager()
         {
-            ISingleton<PlayerManager>.instance = this;
+            MultiServiceLocator.Provide<PlayerManager>(this);
 
             PlayerData player1 = new PlayerData();
             player1.Name = "Player 1";

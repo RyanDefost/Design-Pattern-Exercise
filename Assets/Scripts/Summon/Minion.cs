@@ -1,4 +1,5 @@
 ﻿using Project.GameLogic;
+using Project.GameLogic.ServiceLocator;
 using Project.ObjectPool;
 using Project.Player;
 using Project.Spawner;
@@ -23,8 +24,8 @@ namespace Project.Summon
         public HealthSystem HealthSystem { get; set; }
         public CollisionComponent CollisionComponent { get; }
 
-        private PlayerManager playerManager = ISingleton<PlayerManager>.Instance();
-        private MinionManager minionManager = ISingleton<MinionManager>.Instance();
+        private PlayerManager playerManager = MultiServiceLocator.GetService<PlayerManager>();
+        private MinionManager minionManager = MultiServiceLocator.GetService<MinionManager>();
 
         public Minion()
         {

@@ -1,15 +1,14 @@
-﻿using Project.Player;
+﻿using Project.GameLogic.ServiceLocator;
+using Project.Player;
 using Project.Summon;
 using System;
 using UnityEngine;
 
 namespace Project.GameLogic
 {
-    public class GameMaster : MonoBehaviour, ISingleton<GameMaster>
+    public class GameMaster : MonoBehaviour
     {
         public Action OnUpdate;
-
-        private CollisionSystem collisionSystem;
 
         private MinionManager minionManager;
         private PlayerManager playerManager;
@@ -17,7 +16,7 @@ namespace Project.GameLogic
 
         private void Start()
         {
-            ISingleton<GameMaster>.instance = this;
+            MultiServiceLocator.Provide<GameMaster>(this);
 
             InstaniatieScripts();
         }
@@ -27,8 +26,6 @@ namespace Project.GameLogic
 
         private void InstaniatieScripts()
         {
-            //this.collisionSystem = new CollisionSystem();
-
             this.minionManager = new MinionManager();
             this.playerManager = new PlayerManager();
 

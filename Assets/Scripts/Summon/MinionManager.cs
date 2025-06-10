@@ -1,11 +1,12 @@
 ﻿using Project.GameLogic;
+using Project.GameLogic.ServiceLocator;
 using Project.ObjectPool;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Summon
 {
-    public class MinionManager : GameBehaviour, ISingleton<MinionManager>
+    public class MinionManager : GameBehaviour
     {
         public List<Minion> minions { get; private set; }
 
@@ -13,7 +14,7 @@ namespace Project.Summon
 
         public MinionManager()
         {
-            ISingleton<MinionManager>.instance = this;
+            MultiServiceLocator.Provide<MinionManager>(this);
         }
 
         public override void Update()

@@ -1,6 +1,7 @@
 ﻿using Project.GameInput;
 using Project.GameInput.MovementInput;
 using Project.GameLogic;
+using Project.GameLogic.ServiceLocator;
 using Project.Summon;
 using UnityEngine;
 
@@ -21,8 +22,8 @@ namespace Project.Player
         public CollisionComponent CollisionComponent { get; }
         public CastingComponent CastingComponent { get; }
 
-        private MinionManager MinionManager = ISingleton<MinionManager>.Instance();
-        private PlayerManager playerManager = ISingleton<PlayerManager>.Instance();
+        private MinionManager MinionManager = MultiServiceLocator.GetService<MinionManager>();
+        private PlayerManager playerManager = MultiServiceLocator.GetService<PlayerManager>();
 
         private InputHandler inputHandler;
         private MoveCommand MoveUpCommand = new MoveCommand(Vector2.up);

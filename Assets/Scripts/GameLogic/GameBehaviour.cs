@@ -1,4 +1,6 @@
-﻿namespace Project.GameLogic
+﻿using Project.GameLogic.ServiceLocator;
+
+namespace Project.GameLogic
 {
     public abstract class GameBehaviour
     {
@@ -6,7 +8,7 @@
 
         public GameBehaviour()
         {
-            this.gameMaster = ISingleton<GameMaster>.Instance();
+            this.gameMaster = MultiServiceLocator.GetService<GameMaster>();
 
             AssignToGameMaster();
         }

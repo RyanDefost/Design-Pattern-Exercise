@@ -1,5 +1,5 @@
 ﻿using Project.GameInput;
-using Project.GameLogic;
+using Project.GameLogic.ServiceLocator;
 using Project.Summon;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Project.Player
         private InputQueue inputQueue;
         private MinionCreator minionCreator;
 
-        private MinionManager MinionManager = ISingleton<MinionManager>.Instance();
+        private MinionManager MinionManager = MultiServiceLocator.GetService<MinionManager>();
 
         private List<Vector2> spawnPositions = new List<Vector2>()
         {
