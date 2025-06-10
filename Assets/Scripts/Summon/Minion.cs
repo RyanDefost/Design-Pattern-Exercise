@@ -53,20 +53,22 @@ namespace Project.Summon
 
             this.SubscribeToOnHit();
             this.SubscribeToOnDie();
+
+            this.minionData.OnSpawn?.Invoke(this);
         }
 
         public void OnEnableObject()
         {
             this.gameObject.SetActive(true);
-            this.CollisionComponent.active = true;
+            this.CollisionComponent.Activate();
         }
 
         public void OnDisableObject()
         {
             this.gameObject.SetActive(false);
-
-            this.CollisionComponent.active = false;
             this.gameObject.name = "Minion";
+
+            this.minionData.OnDeath?.Invoke(this);
         }
 
         public void UpdateMinion()
@@ -79,7 +81,6 @@ namespace Project.Summon
             if (collider.actor is IDamager)
             {
                 var damager = (IDamager)collider.actor;
-                Debug.Log(damager.Damage + "DAMAGING ENEMIE");
                 this.HealthSystem.RemoveHealth(damager.Damage);
             }
         }
@@ -104,12 +105,11 @@ namespace Project.Summon
         {
             this.gameObject.SetActive(false);
 
-
             this.UnSubscribeToOnHit();
             this.UnSubscribeToOnDie();
 
+            this.CollisionComponent.Deactivate();
             this.minionManager.DeactivateMinion(this);
-
         }
 
         private void SubscribeToOnHit() => this.CollisionComponent.OnHit += SetHit;

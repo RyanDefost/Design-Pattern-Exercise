@@ -24,8 +24,9 @@ namespace Project.GameLogic
             Vector2 step = CalculateNextStep(this.actor.Entity.GetPosition(), this.target);
             actor.Entity.GameObject.transform.Translate(step);
 
-            if (actor.CollisionComponent.CheckCollision())
+            if (actor.CollisionComponent.colliding.Count > 0)
             {
+                Debug.Log("TRY MOVE");
                 actor.Entity.GameObject.transform.Translate(-step);
             }
         }

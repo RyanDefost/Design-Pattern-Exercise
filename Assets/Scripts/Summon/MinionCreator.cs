@@ -44,8 +44,8 @@ namespace Project.Summon
             {
                 if (QueueOrder[1] == item.Key)
                 {
-                    var abilityDecorator = new MinionBodyDecorator(item.Value);
-                    minionData = abilityDecorator.Decorate(minionData);
+                    var bodyDecorator = new MinionBodyDecorator(item.Value);
+                    minionData = bodyDecorator.Decorate(minionData);
                 }
             }
 
@@ -53,8 +53,8 @@ namespace Project.Summon
             {
                 if (QueueOrder[2] == item.Key)
                 {
-                    var abilityDecorator = new MinionStabilityDecorator(item.Value);
-                    minionData = abilityDecorator.Decorate(minionData);
+                    var stabilityDecorator = new MinionStabilityDecorator(item.Value);
+                    minionData = stabilityDecorator.Decorate(minionData);
                 }
             }
 
@@ -62,8 +62,8 @@ namespace Project.Summon
             {
                 if (QueueOrder[3] == item.Key)
                 {
-                    var abilityDecorator = new MinionAmountDecorator(item.Value);
-                    minionData = abilityDecorator.Decorate(minionData);
+                    var amountDecorator = new MinionAmountDecorator(item.Value);
+                    minionData = amountDecorator.Decorate(minionData);
                 }
             }
 

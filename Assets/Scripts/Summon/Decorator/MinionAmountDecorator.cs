@@ -6,10 +6,10 @@ namespace Project.Summon.Decorator
     {
         private Dictionary<MinionType, MinionAmountData> amountValues = new Dictionary<MinionType, MinionAmountData>()
         {
-            {MinionType.WATER,  new MinionAmountData(4, 0.8f, 0.8f)},
-            {MinionType.EARTH,  new MinionAmountData(1, 1.2f, 1.2f)},
-            {MinionType.FIRE,   new MinionAmountData(2, 1.0f, 1.0f)},
-            {MinionType.AIR,    new MinionAmountData(4, 0.8f, 0.8f)}
+            {MinionType.WATER,  new MinionAmountData(4, 0.8f, 1.4f)},
+            {MinionType.EARTH,  new MinionAmountData(1, 1.2f, 1.0f)},
+            {MinionType.FIRE,   new MinionAmountData(2, 1.0f, 1.4f)},
+            {MinionType.AIR,    new MinionAmountData(4, 0.8f, 1.4f)}
         };
 
         public MinionAmountDecorator(MinionType minionType) : base(minionType) { }

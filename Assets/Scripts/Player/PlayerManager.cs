@@ -16,6 +16,7 @@ namespace Project.Player
             player1.Name = "Player 1";
             player1.team = Color.blue;
             player1.health = 100;
+            player1.speed = 2;
             player1.spawnPosition = new Vector2(10, 0);
             player1.movementInput = new KeyCode[4] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D };
             player1.castInput = new KeyCode[5] { KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L, KeyCode.Space };
@@ -25,6 +26,7 @@ namespace Project.Player
             player2.Name = "Player 2";
             player2.team = Color.red;
             player2.health = 100;
+            player1.speed = 2;
             player2.spawnPosition = new Vector2(-10, 0);
             player2.movementInput = new KeyCode[4] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
             player2.castInput = new KeyCode[5] { KeyCode.Keypad5, KeyCode.Keypad2, KeyCode.Keypad1, KeyCode.Keypad3, KeyCode.KeypadEnter };

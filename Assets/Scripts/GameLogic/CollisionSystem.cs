@@ -2,13 +2,22 @@
 
 namespace Project.GameLogic
 {
-    public class CollisionSystem : ISingleton<CollisionSystem>
+    public class CollisionSystem : GameBehaviour, ISingleton<CollisionSystem>
     {
         private List<CollisionComponent> colliders = new List<CollisionComponent>();
+        public List<CollisionComponent> Colliders { get { return colliders; } }
 
         public CollisionSystem()
         {
             ISingleton<CollisionSystem>.instance = this;
+        }
+
+        public override void Update()
+        {
+            for (int i = 0; i < colliders.Count; i++)
+            {
+                CheckCollisions(colliders[i]);
+            }
         }
 
         public void SubscribeCollider(CollisionComponent collider)
@@ -16,7 +25,7 @@ namespace Project.GameLogic
             this.colliders.Add(collider);
         }
 
-        public void UnsubscribeCollider(CollisionComponent collider)
+        public void UnSubscribeCollider(CollisionComponent collider)
         {
             this.colliders.Remove(collider);
         }

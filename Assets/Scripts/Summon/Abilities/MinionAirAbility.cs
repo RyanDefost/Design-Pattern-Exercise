@@ -5,21 +5,29 @@ namespace Project.Summon.Abilities
 {
     public class MinionAirAbility : IAbility
     {
-        private CollisionComponent collisionComponent;
+        private CollisionSystem collisionSystem = ISingleton<CollisionSystem>.Instance();
 
         public void Activate(Minion minion)
         {
-            collisionComponent = new CollisionComponent(minion);
-            collisionComponent.sizeMultiplier = minion.minionData.areaOfEffect;
-
-            GetCollidersInArea(collisionComponent);
-
-            Debug.Log("Activate AIR ability");
+            SetSpeed(minion);
         }
 
-        private void GetCollidersInArea(CollisionComponent collider)
+        public void SetSpeed(Minion minion)
         {
-            collider.CheckCollision();
+            foreach (var collider in collisionSystem.Colliders)
+            {
+                float distance = Vector2.Distance(minion.GetPosition(), collider.actor.GetPosition());
+
+                if (distance >= minion.minionData.areaOfEffect
+                    || collider == minion.CollisionComponent) continue;
+
+                if (collider.actor is Player.Player)
+                {
+                    var component = (Player.Player)collider.actor;
+
+                    component.speed += 1.2f;
+                }
+            }
         }
     }
 }

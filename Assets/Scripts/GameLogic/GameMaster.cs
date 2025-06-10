@@ -27,10 +27,11 @@ namespace Project.GameLogic
 
         private void InstaniatieScripts()
         {
-            this.collisionSystem = new CollisionSystem();
+            //this.collisionSystem = new CollisionSystem();
 
             this.minionManager = new MinionManager();
             this.playerManager = new PlayerManager();
+
             //Expand ...
         }
     }

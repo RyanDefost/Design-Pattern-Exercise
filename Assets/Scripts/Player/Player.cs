@@ -11,8 +11,10 @@ namespace Project.Player
         public PlayerData playerData;
 
         public Color Team { get => playerData.team; }
-        public Vector2 Position { get => this.gameObject.transform.position; }
+        public float speed;
         public float Health { get => HealthSystem.GetHealth(); }
+        public Vector2 Position { get => this.gameObject.transform.position; }
+
         public float CastArea { get; set; }
 
         public HealthSystem HealthSystem { get; }
@@ -33,6 +35,7 @@ namespace Project.Player
         {
             this.playerData = data;
 
+            this.speed = data.speed;
             this.gameObject.name = data.Name;
             this.spriteRenderer.color = data.team;
 
@@ -48,10 +51,14 @@ namespace Project.Player
 
             this.SubscribeToOnHit();
             this.SubscribeToOnDie();
+
+            this.CollisionComponent.Activate();
         }
 
         public void UpdatePlayer()
         {
+            if (this.Team == Color.blue) Debug.Log(Health + " :HEALTH");
+
             this.inputHandler.HandleInput();
             this.CastingComponent.UpdateCasting();
 
@@ -81,6 +88,7 @@ namespace Project.Player
             this.UnSubscribeToOnDie();
 
             this.CastingComponent.Destroy();
+            this.CollisionComponent.Deactivate();
 
             gameObject.SetActive(false);
             playerManager.DeSpawnPlayer(this);
@@ -98,7 +106,10 @@ namespace Project.Player
     {
         public string Name;
         public Color team;
+
         public float health;
+        public float speed;
+
         public Vector2 spawnPosition;
 
         public KeyCode[] movementInput;

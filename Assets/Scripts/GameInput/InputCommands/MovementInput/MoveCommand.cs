@@ -1,5 +1,4 @@
-﻿using Project.GameLogic;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Project.GameInput.MovementInput
@@ -17,9 +16,9 @@ namespace Project.GameInput.MovementInput
 
         public void Execute(InputHandler inputHandler)
         {
-            var actor = (Entity)inputHandler.inputReceiver;
+            var actor = (Player.Player)inputHandler.inputReceiver;
 
-            actor.AddPosition(direction * Time.deltaTime);
+            actor.AddPosition(direction * actor.speed * Time.deltaTime);
 
             this.OnExecute?.Invoke();
         }

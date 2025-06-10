@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Project.GameLogic
 {
@@ -20,6 +21,8 @@ namespace Project.GameLogic
 
         public void RemoveHealth(float health)
         {
+            Debug.Log(this.health + " :HEALTH");
+
             this.health -= health;
 
             if (this.health <= 0)
