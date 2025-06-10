@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Project.GameLogic.Systems;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Project.GameLogic
+namespace Project.GameLogic.EntityComponents
 {
     public class CollisionComponent
     {

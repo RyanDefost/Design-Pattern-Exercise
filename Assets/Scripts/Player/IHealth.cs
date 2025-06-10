@@ -1,4 +1,4 @@
-﻿using Project.GameLogic;
+﻿using Project.GameLogic.EntityComponents;
 
 namespace Project.Player
 {
@@ -6,6 +6,6 @@ namespace Project.Player
     {
         public float Health { get; }
 
-        public HealthSystem HealthSystem { get; }
+        public HealthComponent HealthSystem { get; }
     }
 }

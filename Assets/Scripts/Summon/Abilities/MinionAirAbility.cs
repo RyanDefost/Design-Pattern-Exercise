@@ -1,4 +1,4 @@
-﻿using Project.GameLogic;
+﻿using Project.GameLogic.Systems;
 using UnityEngine;
 
 namespace Project.Summon.Abilities

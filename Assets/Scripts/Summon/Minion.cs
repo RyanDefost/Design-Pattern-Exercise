@@ -1,4 +1,5 @@
 ﻿using Project.GameLogic;
+using Project.GameLogic.EntityComponents;
 using Project.GameLogic.ServiceLocator;
 using Project.ObjectPool;
 using Project.Player;
@@ -21,7 +22,7 @@ namespace Project.Summon
         public float Health { get => HealthSystem.GetHealth(); }
 
         public LocomotionComponent<Minion> locomotionComponent;
-        public HealthSystem HealthSystem { get; set; }
+        public HealthComponent HealthSystem { get; set; }
         public CollisionComponent CollisionComponent { get; }
 
         private PlayerManager playerManager = MultiServiceLocator.GetService<PlayerManager>();
@@ -31,7 +32,7 @@ namespace Project.Summon
         {
             this.locomotionComponent = new LocomotionComponent<Minion>(this);
             this.CollisionComponent = new CollisionComponent(this);
-            this.HealthSystem = new HealthSystem();
+            this.HealthSystem = new HealthComponent();
         }
 
         public void SetData(MinionData minionData)

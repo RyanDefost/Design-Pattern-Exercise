@@ -4,7 +4,7 @@ using Project.Summon;
 using System;
 using UnityEngine;
 
-namespace Project.GameLogic
+namespace Project.GameLogic.Systems
 {
     public class GameMaster : MonoBehaviour
     {

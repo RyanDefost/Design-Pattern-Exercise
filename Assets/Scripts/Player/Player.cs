@@ -1,6 +1,7 @@
 ﻿using Project.GameInput;
 using Project.GameInput.MovementInput;
 using Project.GameLogic;
+using Project.GameLogic.EntityComponents;
 using Project.GameLogic.ServiceLocator;
 using Project.Summon;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Project.Player
 
         public float CastArea { get; set; }
 
-        public HealthSystem HealthSystem { get; }
+        public HealthComponent HealthSystem { get; }
         public CollisionComponent CollisionComponent { get; }
         public CastingComponent CastingComponent { get; }
 
@@ -40,7 +41,7 @@ namespace Project.Player
             this.gameObject.name = data.Name;
             this.spriteRenderer.color = data.team;
 
-            this.HealthSystem = new HealthSystem(playerData.health);
+            this.HealthSystem = new HealthComponent(playerData.health);
             this.CastingComponent = new CastingComponent(this, this.playerData.castInput);
             this.CollisionComponent = new CollisionComponent(this);
 

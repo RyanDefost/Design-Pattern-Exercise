@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Project.GameLogic.EntityComponents;
+using System.Collections.Generic;
 
-namespace Project.GameLogic
+namespace Project.GameLogic.Systems
 {
     public class CollisionSystem : GameBehaviour, ISingleton<CollisionSystem>
     {

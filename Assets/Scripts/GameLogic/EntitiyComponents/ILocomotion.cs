@@ -1,4 +1,6 @@
-﻿namespace Project.GameLogic
+﻿using Project.GameLogic.EntityComponents;
+
+namespace Project.GameLogic
 {
     public interface ILocomotion
     {

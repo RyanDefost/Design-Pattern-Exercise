@@ -1,4 +1,4 @@
-﻿namespace Project.GameLogic
+﻿namespace Project.GameLogic.Systems
 {
     public interface ISingleton<T> where T : ISingleton<T>, new()
     {

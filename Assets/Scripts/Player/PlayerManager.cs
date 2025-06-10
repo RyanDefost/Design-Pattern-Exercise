@@ -1,5 +1,5 @@
-﻿using Project.GameLogic;
-using Project.GameLogic.ServiceLocator;
+﻿using Project.GameLogic.ServiceLocator;
+using Project.GameLogic.Systems;
 using System.Collections.Generic;
 using UnityEngine;
 

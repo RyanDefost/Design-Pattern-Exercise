@@ -1,6 +1,6 @@
 ﻿using Project.GameLogic.ServiceLocator;
 
-namespace Project.GameLogic
+namespace Project.GameLogic.Systems
 {
     public abstract class GameBehaviour
     {

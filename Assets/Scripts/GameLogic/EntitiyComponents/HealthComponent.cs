@@ -1,15 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Project.GameLogic
+namespace Project.GameLogic.EntityComponents
 {
-    public class HealthSystem
+    public class HealthComponent
     {
         public Action OnDie;
 
         private float health;
 
-        public HealthSystem(float health = 10)
+        public HealthComponent(float health = 10)
         {
             this.health = health;
         }
