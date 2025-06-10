@@ -21,7 +21,6 @@ namespace Project.GameInput.MovementInput
 
             actor.AddPosition(direction * Time.deltaTime);
 
-            Debug.Log($"Move {direction} Command");
             this.OnExecute?.Invoke();
         }
     }

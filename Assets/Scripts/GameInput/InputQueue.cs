@@ -20,17 +20,16 @@ namespace Project.GameInput
         private EnterComboCommand enterComboCommand = new EnterComboCommand();
 
 
-        public InputQueue()
+        public InputQueue(KeyCode[] castInput)
         {
             this.inputHandler = new InputHandler(this);
-            this.inputHandler.BindInputToCommand(KeyCode.UpArrow, upComboCommand);
-            this.inputHandler.BindInputToCommand(KeyCode.DownArrow, downComboCommand);
-            this.inputHandler.BindInputToCommand(KeyCode.LeftArrow, leftComboCommand);
-            this.inputHandler.BindInputToCommand(KeyCode.RightArrow, rightComboCommand);
 
-            this.inputHandler.BindInputToCommand(KeyCode.Space, enterComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[0], upComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[1], downComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[2], leftComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[3], rightComboCommand);
 
-            //TryAssignAllQueueable();
+            this.inputHandler.BindInputToCommand(castInput[4], enterComboCommand);
         }
 
         public void UpdateInputQueue()
@@ -62,7 +61,6 @@ namespace Project.GameInput
 
             this.inputQueue.Clear();
 
-            Debug.Log("Invoke");
             this.OnSetCurrentQueue?.Invoke();
         }
 

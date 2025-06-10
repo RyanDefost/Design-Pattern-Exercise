@@ -21,14 +21,14 @@ namespace Project.Summon
             UpdateMinions();
         }
 
-        public void CreateMinion(MinionCreator minionCreator)
+        public void CreateMinion(MinionCreator minionCreator, List<Vector2> spawnPositions)
         {
             MinionData minionData = new MinionData();
             minionData = minionCreator.SetValues(minionData);
 
-            Debug.Log(minionData.platoonSize);
             for (int i = 0; i < minionData.platoonSize; i++)
             {
+                minionData.spawnOffset = spawnPositions[i];
                 ActivateMinion(minionData);
             }
         }
@@ -36,7 +36,7 @@ namespace Project.Summon
         public void ActivateMinion(MinionData minionData)
         {
             Minion minion = this.objectPool.RequestObject();
-            minion.minionData = minionData;
+            minion.SetData(minionData);
         }
 
         public void DeactivateMinion(Minion minion)

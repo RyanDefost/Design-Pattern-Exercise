@@ -4,51 +4,129 @@ using Project.Player;
 using Project.Spawner;
 using Project.Summon.Abilities;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Summon
 {
-    public class Minion : Entity, IPoolable, ISpawnable
+    public class Minion : Entity, IPoolable, ISpawnable, IDamager, IHealth, ILocomotion
     {
-        public bool Active { get; set; }
         public MinionData minionData;
+
+        public bool Active { get; set; }
+        public Entity Entity { get => this; }
+
+        public float Damage { get => minionData.Damage; }
+        public float Health { get => HealthSystem.GetHealth(); }
+
+        public LocomotionComponent<Minion> locomotionComponent;
+        public HealthSystem HealthSystem { get; set; }
+        public CollisionComponent CollisionComponent { get; }
+
+        private PlayerManager playerManager = ISingleton<PlayerManager>.Instance();
+        private MinionManager minionManager = ISingleton<MinionManager>.Instance();
 
         public Minion()
         {
-            this.gameObject.name = "minion";
+            this.locomotionComponent = new LocomotionComponent<Minion>(this);
+            this.CollisionComponent = new CollisionComponent(this);
+            this.HealthSystem = new HealthSystem();
         }
 
-        public void UpdateMinion()
+        public void SetData(MinionData minionData)
         {
+            this.minionData = minionData;
+
             this.gameObject.name = (
-                this.minionData.caster.PlayerData.Name + "_Minion"
+                this.minionData.caster.Team + "_Minion"
                 + " AT: " + this.minionData.Damage
                 + " DEF: " + this.minionData.Defense
             );
+
+            this.SetColor(minionData.caster.Team);
+            this.SetPosition(minionData.caster.Position + minionData.spawnOffset);
+            this.SetScale(new Vector2(0.5f, 0.5f));
+
+            this.locomotionComponent.SetTarget(GetTarget());
+            this.locomotionComponent.SetSpeed(minionData.Speed);
+            this.HealthSystem.SetHealth(minionData.Defense);
+
+            this.SubscribeToOnHit();
+            this.SubscribeToOnDie();
+        }
+
+        public void OnEnableObject()
+        {
+            this.gameObject.SetActive(true);
+            this.CollisionComponent.active = true;
         }
 
         public void OnDisableObject()
         {
             this.gameObject.SetActive(false);
 
-            this.gameObject.name = "minion";
+            this.CollisionComponent.active = false;
+            this.gameObject.name = "Minion";
         }
 
-        public void OnEnableObject()
+        public void UpdateMinion()
         {
-            this.gameObject.SetActive(true);
+            locomotionComponent.UpdateMovement();
         }
 
-        public void SetColor(Color color)
+        private void SetHit(CollisionComponent collider)
         {
-            this.spriteRenderer.color = color;
+            if (collider.actor is IDamager)
+            {
+                var damager = (IDamager)collider.actor;
+                Debug.Log(damager.Damage + "DAMAGING ENEMIE");
+                this.HealthSystem.RemoveHealth(damager.Damage);
+            }
         }
+
+        private Player.Player GetTarget()
+        {
+            List<Player.Player> players = playerManager.GetPlayers();
+            Player.Player currentTarget = null;
+
+            foreach (var player in players)
+            {
+                if (player.Team != this.minionData.caster.Team)
+                {
+                    currentTarget = player;
+                }
+            }
+
+            return currentTarget;
+        }
+
+        private void Destroy()
+        {
+            this.gameObject.SetActive(false);
+
+
+            this.UnSubscribeToOnHit();
+            this.UnSubscribeToOnDie();
+
+            this.minionManager.DeactivateMinion(this);
+
+        }
+
+        private void SubscribeToOnHit() => this.CollisionComponent.OnHit += SetHit;
+        private void SubscribeToOnDie() => this.HealthSystem.OnDie += Destroy;
+
+        private void UnSubscribeToOnHit() => this.CollisionComponent.OnHit -= SetHit;
+        private void UnSubscribeToOnDie() => this.HealthSystem.OnDie -= Destroy;
+
     }
 
-    public struct MinionData
+    public struct MinionData : IEntityData
     {
         public ICaster caster;
+
         public int platoonSize;
+
+        public Vector2 spawnOffset;
 
         public float Damage;
         public float Defense;

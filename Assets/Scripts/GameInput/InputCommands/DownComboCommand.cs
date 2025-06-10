@@ -12,7 +12,7 @@ namespace Project.GameInput
         {
             var actor = (InputQueue)inputHandler.inputReceiver;
 
-            actor.SaveInputToQueue(inputHandler.CurrentKey);
+            actor.SaveInputToQueue(KeyCode.DownArrow);
 
             Debug.Log("DOWN Command");
             this.OnExecute?.Invoke();

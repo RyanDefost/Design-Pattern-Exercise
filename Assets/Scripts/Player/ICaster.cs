@@ -1,19 +1,17 @@
-﻿using Project.GameInput;
-using Project.Summon;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Project.Player
 {
     public interface ICaster
     {
+        public CastingComponent CastingComponent { get; }
+        //public MinionCreator MinionCreator { get; }
+        //public inputQueue inputQueue { get; }
+
+
+        public float CastArea { get; set; }
+        public Vector2 Position { get; }
         public Color Team { get; }
 
-        public Vector2 Position { get; }
-
-        public PlayerData PlayerData { get; set; }
-
-        public InputQueue InputQueue { get; set; }
-
-        public MinionCreator MinionCreator { get; set; }
     }
 }

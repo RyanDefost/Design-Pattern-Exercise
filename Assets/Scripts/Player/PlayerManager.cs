@@ -4,24 +4,30 @@ using UnityEngine;
 
 namespace Project.Player
 {
-    public class PlayerManager : GameBehaviour
+    public class PlayerManager : GameBehaviour, ISingleton<PlayerManager>
     {
         private List<Player> players = new List<Player>();
 
         public PlayerManager()
         {
+            ISingleton<PlayerManager>.instance = this;
+
             PlayerData player1 = new PlayerData();
             player1.Name = "Player 1";
             player1.team = Color.blue;
+            player1.health = 100;
             player1.spawnPosition = new Vector2(10, 0);
-            player1.inputCodes = new KeyCode[4] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D };
+            player1.movementInput = new KeyCode[4] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D };
+            player1.castInput = new KeyCode[5] { KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L, KeyCode.Space };
             SpawnPlayer(player1);
 
             PlayerData player2 = new PlayerData();
             player2.Name = "Player 2";
             player2.team = Color.red;
+            player2.health = 100;
             player2.spawnPosition = new Vector2(-10, 0);
-            player2.inputCodes = new KeyCode[4] { KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L };
+            player2.movementInput = new KeyCode[4] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
+            player2.castInput = new KeyCode[5] { KeyCode.Keypad5, KeyCode.Keypad2, KeyCode.Keypad1, KeyCode.Keypad3, KeyCode.KeypadEnter };
             SpawnPlayer(player2);
         }
 

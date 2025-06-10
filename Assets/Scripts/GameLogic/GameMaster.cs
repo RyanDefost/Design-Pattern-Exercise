@@ -9,8 +9,11 @@ namespace Project.GameLogic
     {
         public Action OnUpdate;
 
+        private CollisionSystem collisionSystem;
+
         private MinionManager minionManager;
         private PlayerManager playerManager;
+
 
         private void Start()
         {
@@ -24,6 +27,8 @@ namespace Project.GameLogic
 
         private void InstaniatieScripts()
         {
+            this.collisionSystem = new CollisionSystem();
+
             this.minionManager = new MinionManager();
             this.playerManager = new PlayerManager();
             //Expand ...

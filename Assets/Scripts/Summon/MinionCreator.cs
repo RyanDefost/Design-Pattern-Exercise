@@ -1,4 +1,5 @@
-﻿using Project.Player;
+﻿using Project.GameInput;
+using Project.Player;
 using Project.Summon.Decorator;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,14 @@ namespace Project.Summon
     public class MinionCreator
     {
         private ICaster caster;
+        private InputQueue inputQueue;
 
         private Dictionary<KeyCode, MinionType> typing;
 
-        public MinionCreator(ICaster caster)
+        public MinionCreator(InputQueue inputQueue, ICaster caster)
         {
             this.caster = caster;
+            this.inputQueue = inputQueue;
 
             this.typing = new Dictionary<KeyCode, MinionType>
             {
@@ -26,7 +29,7 @@ namespace Project.Summon
 
         public MinionData SetValues(MinionData minionData)
         {
-            var QueueOrder = caster.InputQueue.CurrentQueue;
+            var QueueOrder = this.inputQueue.CurrentQueue;
 
             foreach (var item in typing)
             {
@@ -64,7 +67,7 @@ namespace Project.Summon
                 }
             }
 
-            minionData.caster = caster;
+            minionData.caster = this.caster;
 
             return minionData;
         }
