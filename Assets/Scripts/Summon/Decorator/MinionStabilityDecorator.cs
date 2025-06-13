@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Project.Summon.Decorator
 {
+    /// <summary>
+    /// Assigns the OnDie or OnSpawn effect and timer to the given minionData.
+    /// </summary>
     public class MinionStabilityDecorator : MinionDecorator
     {
         private static MinionData baseMinionData = new MinionData();
@@ -16,6 +19,7 @@ namespace Project.Summon.Decorator
 
         public MinionStabilityDecorator(MinionType minionType) : base(minionType) { }
 
+        //Decorates the MinionData with the correlation values.
         public override MinionData Decorate(MinionData minionData)
         {
             minionData = SetStabilityValues(minionData);

@@ -2,6 +2,9 @@
 
 namespace Project.Summon.Decorator
 {
+    /// <summary>
+    /// Assigns the damage, defense and speed to the given minionData.
+    /// </summary>
     public class MinionBodyDecorator : MinionDecorator
     {
         private Dictionary<MinionType, MinionBodyData> bodyValues = new Dictionary<MinionType, MinionBodyData>()
@@ -14,6 +17,7 @@ namespace Project.Summon.Decorator
 
         public MinionBodyDecorator(MinionType minionType) : base(minionType) { }
 
+        //Decorates the MinionData with the correlation values.
         public override MinionData Decorate(MinionData minionData)
         {
             minionData = SetBodyValues(minionData);
@@ -21,7 +25,7 @@ namespace Project.Summon.Decorator
             return minionData;
         }
 
-        public MinionData SetBodyValues(MinionData minionData)
+        private MinionData SetBodyValues(MinionData minionData)
         {
             foreach (var data in bodyValues)
             {

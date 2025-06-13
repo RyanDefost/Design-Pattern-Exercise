@@ -8,6 +8,7 @@ namespace Project.GameInput
         public Action OnExecute { get; set; }
         public Action<KeyCode> OnExecuteKey { get; set; }
 
+        //Executes when the correlating input has been given inside the InputHandler.
         public void Execute(InputHandler inputHandler)
         {
             var actor = (InputQueue)inputHandler.inputReceiver;

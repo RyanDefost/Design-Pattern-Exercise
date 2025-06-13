@@ -2,6 +2,10 @@
 
 namespace Project.GameLogic
 {
+    /// <summary>
+    /// Handles the movement of Entities with an ILocomotion interface.
+    /// </summary>
+    /// <typeparam name="T">The Identifier of classes that are compatible.</typeparam>
     public class LocomotionComponent<T> where T : ILocomotion
     {
         private T actor;
@@ -17,6 +21,7 @@ namespace Project.GameLogic
             this.speed = speed;
         }
 
+        // Checks for collision and sets the correct movement to the actor.
         public void UpdateMovement()
         {
             if (this.target == null) return;
@@ -40,8 +45,11 @@ namespace Project.GameLogic
             return step;
         }
 
+        // Sets a new target.
         public void SetTarget(Entity target) => this.target = target;
+        // Sets the new speed of the actor.
         public void SetSpeed(float speed) => this.speed = speed;
+        // Sets a new actor to move.
         public void SetActor(T actor) => this.actor = actor;
     }
 }

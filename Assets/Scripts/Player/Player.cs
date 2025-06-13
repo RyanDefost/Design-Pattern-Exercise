@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Project.Player
 {
+    /// <summary>
+    /// Logic for a player that updates all variables and called references.
+    /// </summary>
     public class Player : Entity, IInputReceiver, ICaster, IHealth
     {
         public PlayerData playerData;
@@ -38,6 +41,8 @@ namespace Project.Player
             this.playerData = data;
 
             this.speed = data.speed;
+            this.SetPosition(data.spawnPosition);
+
             this.gameObject.name = data.Name;
             this.spriteRenderer.color = data.team;
 
@@ -57,10 +62,9 @@ namespace Project.Player
             this.CollisionComponent.Activate();
         }
 
+        // Updates the players InputHandler and Checks the Casting.
         public void UpdatePlayer()
         {
-            if (this.Team == Color.blue) Debug.Log(Health + " :HEALTH");
-
             this.inputHandler.HandleInput();
             this.CastingComponent.UpdateCasting();
 
@@ -104,6 +108,9 @@ namespace Project.Player
         private void UnSubscribeToOnDie() => this.HealthSystem.OnDie -= Destroy;
     }
 
+    /// <summary>
+    /// Data struct for the initial values of the player.
+    /// </summary>
     public struct PlayerData : IEntityData
     {
         public string Name;

@@ -2,6 +2,9 @@
 
 namespace Project.Summon.Decorator
 {
+    /// <summary>
+    /// Assigns the amount, size and areaOfEffect to the given minionData.
+    /// </summary>
     public class MinionAmountDecorator : MinionAbilityDecorator
     {
         private Dictionary<MinionType, MinionAmountData> amountValues = new Dictionary<MinionType, MinionAmountData>()
@@ -14,6 +17,7 @@ namespace Project.Summon.Decorator
 
         public MinionAmountDecorator(MinionType minionType) : base(minionType) { }
 
+        //Decorates the MinionData with the correlation values.
         public override MinionData Decorate(MinionData minionData)
         {
             minionData = SetAmountValues(minionData);

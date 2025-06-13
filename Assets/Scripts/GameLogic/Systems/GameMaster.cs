@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Project.GameLogic.Systems
 {
+    /// <summary>
+    /// Starting point that sets initial values and updates every frame.
+    /// </summary>
     public class GameMaster : MonoBehaviour
     {
         public Action OnUpdate;

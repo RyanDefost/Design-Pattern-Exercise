@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Project.GameLogic.EntityComponents
 {
+    /// <summary>
+    /// A component for Entities that checks for any collision bases on the size of its actor's GameObject.
+    /// </summary>
     public class CollisionComponent
     {
         public Entity actor { get; }
@@ -23,6 +26,7 @@ namespace Project.GameLogic.EntityComponents
             this.actor = actor;
         }
 
+        // Checks for possible collision with the give collider, adds the collider to colliding when true.
         public bool CheckCollision(CollisionComponent collider)
         {
             if (collider.active == false) return false;
@@ -57,6 +61,7 @@ namespace Project.GameLogic.EntityComponents
             }
         }
 
+        // Deactivates the collider so it won't be checked by the CollisionSystem.
         public void Deactivate()
         {
             collisionSystem.UnSubscribeCollider(this);
@@ -65,6 +70,7 @@ namespace Project.GameLogic.EntityComponents
             colliding.Clear();
         }
 
+        // Activates the collider so it can be checked by the CollisionSystem.
         public void Activate()
         {
             collisionSystem.SubscribeCollider(this);

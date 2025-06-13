@@ -11,6 +11,9 @@ using UnityEngine;
 
 namespace Project.Summon
 {
+    /// <summary>
+    /// Logic for a Minion that updates all variables and called references.
+    /// </summary>
     public class Minion : Entity, IPoolable, ISpawnable, IDamager, IHealth, ILocomotion
     {
         public MinionData minionData;
@@ -35,6 +38,7 @@ namespace Project.Summon
             this.HealthSystem = new HealthComponent();
         }
 
+        // Sets the initial data the minion needs to operate.
         public void SetData(MinionData minionData)
         {
             this.minionData = minionData;
@@ -59,12 +63,14 @@ namespace Project.Summon
             this.minionData.OnSpawn?.Invoke(this);
         }
 
+        // Activates when the object is enabled in the ObjectPool.
         public void OnEnableObject()
         {
             this.gameObject.SetActive(true);
             this.CollisionComponent.Activate();
         }
 
+        // Activates when the object is disabled in the ObjectPool.
         public void OnDisableObject()
         {
             this.gameObject.SetActive(false);
@@ -73,6 +79,7 @@ namespace Project.Summon
             this.minionData.OnDeath?.Invoke(this);
         }
 
+        // Updates the minion.
         public void UpdateMinion()
         {
             locomotionComponent.UpdateMovement();

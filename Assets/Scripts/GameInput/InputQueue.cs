@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Project.GameInput
 {
+    /// <summary>
+    /// Keeps track of the last group of inputs give by its InputHandler.
+    /// </summary>
     public class InputQueue : IInputReceiver
     {
         public List<KeyCode> CurrentQueue { get; private set; }
@@ -32,17 +35,20 @@ namespace Project.GameInput
             this.inputHandler.BindInputToCommand(castInput[4], enterComboCommand);
         }
 
+        // Updates the InputHandler to check for input.
         public void UpdateInputQueue()
         {
             inputHandler.HandleInput();
         }
 
+        // Saves an input to the list of Queued inputs.
         public void SaveInputToQueue(KeyCode key)
         {
             this.inputQueue.Add(key);
             RemoveLastInputFromQueue();
         }
 
+        // Removes the last input that is currently in the queue.
         public void RemoveLastInputFromQueue()
         {
             while (this.inputQueue.Count > this.queueSize)
@@ -51,6 +57,7 @@ namespace Project.GameInput
             }
         }
 
+        // Activates and resets the Queue and sends an Action that the Queue is used.
         public void SetCurrentQueue()
         {
             if (this.inputQueue.Count <= 0) return;

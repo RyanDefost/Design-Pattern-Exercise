@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Project.Player
 {
+    /// <summary>
+    /// A component for entity that have the ability to create minions based on given input.
+    /// </summary>
     public class CastingComponent
     {
         private InputQueue inputQueue;
@@ -29,16 +32,19 @@ namespace Project.Player
             SubscribeToOnSetCurrentQueue();
         }
 
+        // Updates the logic of the InputQueue.
         public void UpdateCasting()
         {
             inputQueue.UpdateInputQueue();
         }
 
+        // Activates the logic of casting and creates a minion.
         public void Cast()
         {
             this.MinionManager.CreateMinion(this.minionCreator, spawnPositions);
         }
 
+        // Removes all subscriptions form the instance.
         public void Destroy()
         {
             UnSubscribeToOnSetCurrentQueue();

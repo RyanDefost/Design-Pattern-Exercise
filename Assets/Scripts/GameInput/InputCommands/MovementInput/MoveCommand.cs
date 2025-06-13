@@ -14,6 +14,7 @@ namespace Project.GameInput.MovementInput
             this.direction = direction;
         }
 
+        //Executes when the correlating input has been given inside the InputHandler.
         public void Execute(InputHandler inputHandler)
         {
             var actor = (Player.Player)inputHandler.inputReceiver;

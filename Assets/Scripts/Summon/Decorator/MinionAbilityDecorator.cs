@@ -22,7 +22,7 @@ namespace Project.Summon.Decorator
             return minionData;
         }
 
-        public MinionData SetAbility(MinionData minionData)
+        private MinionData SetAbility(MinionData minionData)
         {
             foreach (var ability in abilities)
             {

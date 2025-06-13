@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Project.Summon
 {
+    /// <summary>
+    /// Manages all Minions in the game and unpdates all the logic.
+    /// </summary>
     public class MinionManager : GameBehaviour
     {
         public List<Minion> minions { get; private set; }
@@ -17,11 +20,13 @@ namespace Project.Summon
             MultiServiceLocator.Provide<MinionManager>(this);
         }
 
+        // Updates the Minions.
         public override void Update()
         {
             UpdateMinions();
         }
 
+        // Creates a new instance of MinionData and assigns this to a Minion from the ObjectPool.
         public void CreateMinion(MinionCreator minionCreator, List<Vector2> spawnPositions)
         {
             MinionData minionData = new MinionData();
@@ -34,17 +39,20 @@ namespace Project.Summon
             }
         }
 
+        // Activates the minion with the given minionData.
         public void ActivateMinion(MinionData minionData)
         {
             Minion minion = this.objectPool.RequestObject();
             minion.SetData(minionData);
         }
 
+        // Deactivates the given minion.
         public void DeactivateMinion(Minion minion)
         {
             this.objectPool.DeactivateObject(minion);
         }
 
+        // Gets all current minions in the game.
         public List<Minion> GetAllMinions()
         {
             return this.objectPool.GetAllItems();

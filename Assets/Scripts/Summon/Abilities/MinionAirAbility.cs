@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Project.Summon.Abilities
 {
+    /// <summary>
+    /// Ability that sets the speed of a player bases on the minion damage.
+    /// </summary>
     public class MinionAirAbility : IAbility
     {
         private CollisionSystem collisionSystem = ISingleton<CollisionSystem>.Instance();
 
+        // Activates the logic for the current Ability.
         public void Activate(Minion minion)
         {
             SetSpeed(minion);

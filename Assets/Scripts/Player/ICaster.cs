@@ -2,6 +2,9 @@
 
 namespace Project.Player
 {
+    /// <summary>
+    /// Identifier for classes that have an CastingComponent.
+    /// </summary>
     public interface ICaster
     {
         public CastingComponent CastingComponent { get; }

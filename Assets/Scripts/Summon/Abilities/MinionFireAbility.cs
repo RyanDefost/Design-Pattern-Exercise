@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace Project.Summon.Abilities
 {
+    /// <summary>
+    /// Ability that deals damage to surounding Entities bases on the range and Damage.
+    /// </summary>
     public class MinionFireAbility : IAbility
     {
         private CollisionSystem collisionSystem = ISingleton<CollisionSystem>.Instance();
 
+        // Activates the logic for the current Ability.
         public void Activate(Minion minion)
         {
             SetDamage(minion);

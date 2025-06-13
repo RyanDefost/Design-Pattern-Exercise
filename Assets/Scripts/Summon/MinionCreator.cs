@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Project.Summon
 {
+    /// <summary>
+    /// Sets minionData bases on the given input.
+    /// </summary>
     public class MinionCreator
     {
         private ICaster caster;
@@ -27,6 +30,7 @@ namespace Project.Summon
             };
         }
 
+        // Sets minionData bases on the given input.
         public MinionData SetValues(MinionData minionData)
         {
             var QueueOrder = this.inputQueue.CurrentQueue;

@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace Project.Summon.Abilities
 {
+    /// <summary>
+    /// Ability that heals the player that is close enough around the current minion.
+    /// </summary>
     public class MinionWaterAbility : IAbility
     {
         private CollisionSystem collisionSystem = ISingleton<CollisionSystem>.Instance();
 
+        // Activates the logic for the current Ability.
         public void Activate(Minion minion)
         {
             SetHealing(minion);
