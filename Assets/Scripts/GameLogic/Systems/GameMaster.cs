@@ -2,6 +2,7 @@
 using Project.Player;
 using Project.Summon;
 using System;
+using Project.GameLogic.UIInterface;
 using UnityEngine;
 
 namespace Project.GameLogic.Systems
@@ -13,6 +14,7 @@ namespace Project.GameLogic.Systems
     {
         public Action OnUpdate;
 
+        private UserInterface userInterface;
         private MinionManager minionManager;
         private PlayerManager playerManager;
 
@@ -29,6 +31,7 @@ namespace Project.GameLogic.Systems
 
         private void InstaniatieScripts()
         {
+            this.userInterface = new UserInterface();
             this.minionManager = new MinionManager();
             this.playerManager = new PlayerManager();
 

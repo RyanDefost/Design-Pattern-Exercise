@@ -9,7 +9,8 @@ namespace Project.GameLogic.EntityComponents
     public class HealthComponent
     {
         public Action OnDie;
-
+        public Action OnHit;
+        
         private float health;
 
         public HealthComponent(float health = 10)
@@ -27,7 +28,8 @@ namespace Project.GameLogic.EntityComponents
         public void RemoveHealth(float health)
         {
             Debug.Log(this.health + " :HEALTH");
-
+            
+            this.OnHit?.Invoke();
             this.health -= health;
 
             if (this.health <= 0)
@@ -47,7 +49,7 @@ namespace Project.GameLogic.EntityComponents
         {
             this.health = 0;
 
-            OnDie?.Invoke();
+            this.OnDie?.Invoke();
         }
 
         // Gets the current amount of health.

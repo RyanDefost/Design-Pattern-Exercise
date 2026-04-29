@@ -1,6 +1,7 @@
 ﻿using Project.GameLogic.ServiceLocator;
 using Project.GameLogic.Systems;
 using System.Collections.Generic;
+using Project.GameLogic.UIInterface;
 using UnityEngine;
 
 namespace Project.Player
@@ -11,10 +12,14 @@ namespace Project.Player
     public class PlayerManager : GameBehaviour
     {
         private List<Player> players = new List<Player>();
+        
+        private UserInterface userInterface;
 
         public PlayerManager()
         {
             MultiServiceLocator.Provide<PlayerManager>(this);
+            
+            this.userInterface = MultiServiceLocator.GetService<UserInterface>();
 
             PlayerData player1 = new PlayerData();
             player1.Name = "Player 1";
@@ -24,7 +29,9 @@ namespace Project.Player
             player1.spawnPosition = new Vector2(-5, 0);
             player1.movementInput = new KeyCode[4] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D };
             player1.castInput = new KeyCode[5] { KeyCode.I, KeyCode.K, KeyCode.J, KeyCode.L, KeyCode.Space };
+            player1.uiPosition = new Vector2(480f, 950f);
             SpawnPlayer(player1);
+            
 
             PlayerData player2 = new PlayerData();
             player2.Name = "Player 2";
@@ -34,7 +41,9 @@ namespace Project.Player
             player2.spawnPosition = new Vector2(5, 0);
             player2.movementInput = new KeyCode[4] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
             player2.castInput = new KeyCode[5] { KeyCode.Keypad5, KeyCode.Keypad2, KeyCode.Keypad1, KeyCode.Keypad3, KeyCode.KeypadEnter };
+            player2.uiPosition = new Vector2(1440f, 950f);
             SpawnPlayer(player2);
+
         }
 
         // Updates the manager and player logic.

@@ -1,8 +1,10 @@
-﻿using Project.GameInput;
+﻿using System;
+using Project.GameInput;
 using Project.GameInput.MovementInput;
 using Project.GameLogic;
 using Project.GameLogic.EntityComponents;
 using Project.GameLogic.ServiceLocator;
+using Project.GameLogic.UIInterface;
 using Project.Summon;
 using UnityEngine;
 
@@ -21,19 +23,20 @@ namespace Project.Player
         public Vector2 Position { get => this.gameObject.transform.position; }
 
         public float CastArea { get; set; }
-
+        
         public HealthComponent HealthSystem { get; }
         public CollisionComponent CollisionComponent { get; }
         public CastingComponent CastingComponent { get; }
+        public PlayerHealthUI PlayerHealthUI { get; }
 
-        private MinionManager MinionManager = MultiServiceLocator.GetService<MinionManager>();
-        private PlayerManager playerManager = MultiServiceLocator.GetService<PlayerManager>();
-
-        private InputHandler inputHandler;
-        private MoveCommand MoveUpCommand = new MoveCommand(Vector2.up);
-        private MoveCommand MoveDownCommand = new MoveCommand(Vector2.down);
-        private MoveCommand MoveLeftCommand = new MoveCommand(Vector2.left);
-        private MoveCommand MoveRightCommand = new MoveCommand(Vector2.right);
+        private readonly MinionManager MinionManager = MultiServiceLocator.GetService<MinionManager>();
+        private readonly PlayerManager playerManager = MultiServiceLocator.GetService<PlayerManager>();
+        
+        private readonly InputHandler inputHandler;
+        private readonly MoveCommand MoveUpCommand = new MoveCommand(Vector2.up);
+        private readonly MoveCommand MoveDownCommand = new MoveCommand(Vector2.down);
+        private readonly MoveCommand MoveLeftCommand = new MoveCommand(Vector2.left);
+        private readonly MoveCommand MoveRightCommand = new MoveCommand(Vector2.right);
 
 
         public Player(PlayerData data)
@@ -49,6 +52,7 @@ namespace Project.Player
             this.HealthSystem = new HealthComponent(playerData.health);
             this.CastingComponent = new CastingComponent(this, this.playerData.castInput);
             this.CollisionComponent = new CollisionComponent(this);
+            this.PlayerHealthUI = new PlayerHealthUI(this, playerData.uiPosition);
 
             this.inputHandler = new InputHandler(this);
             this.inputHandler.BindInputToCommand(data.movementInput[0], MoveUpCommand, true);
@@ -80,13 +84,14 @@ namespace Project.Player
                     if (minion.CollisionComponent == collider)
                     {
                         if (minion.minionData.caster == this) return;
-
+                        
                         minion.HealthSystem.Die();
                         this.HealthSystem.RemoveHealth(minion.Damage);
                     }
                 }
             }
         }
+        
 
         private void Destroy()
         {
@@ -123,5 +128,7 @@ namespace Project.Player
 
         public KeyCode[] movementInput;
         public KeyCode[] castInput;
+        
+        public Vector2 uiPosition;
     }
 }

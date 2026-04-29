@@ -35,6 +35,7 @@ namespace Project.Summon
         {
             var QueueOrder = this.inputQueue.CurrentQueue;
 
+            //Ability
             foreach (var item in typing)
             {
                 if (QueueOrder[0] == item.Key)
@@ -44,6 +45,7 @@ namespace Project.Summon
                 }
             }
 
+            //body
             foreach (var item in typing)
             {
                 if (QueueOrder[1] == item.Key)
@@ -52,7 +54,8 @@ namespace Project.Summon
                     minionData = bodyDecorator.Decorate(minionData);
                 }
             }
-
+            
+            //OnDie / OnSpawn
             foreach (var item in typing)
             {
                 if (QueueOrder[2] == item.Key)
@@ -61,7 +64,8 @@ namespace Project.Summon
                     minionData = stabilityDecorator.Decorate(minionData);
                 }
             }
-
+            
+            //Amount
             foreach (var item in typing)
             {
                 if (QueueOrder[3] == item.Key)
