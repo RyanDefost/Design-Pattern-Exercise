@@ -44,7 +44,7 @@ namespace Project.Summon
                     minionData = abilityDecorator.Decorate(minionData);
                 }
             }
-
+            
             //body
             foreach (var item in typing)
             {

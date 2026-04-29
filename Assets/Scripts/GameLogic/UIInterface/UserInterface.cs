@@ -13,6 +13,7 @@ namespace Project.GameLogic.UIInterface
         private List<GameObject> UIElements = new();
         
         private StaticUI staticUI;
+        private SpellBookUI spellBookUI;
         
         public UserInterface()
         {
@@ -20,6 +21,7 @@ namespace Project.GameLogic.UIInterface
             canvasUI = SetupCanvas();
             
             this.staticUI = new StaticUI();
+            this.spellBookUI = new SpellBookUI();
         }
 
         private Canvas SetupCanvas()

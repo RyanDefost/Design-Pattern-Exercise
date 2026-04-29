@@ -12,8 +12,8 @@ namespace Project.GameInput
         public List<KeyCode> CurrentQueue { get; private set; }
         public Action OnSetCurrentQueue;
 
+        private int queueSize = 4;
         private List<KeyCode> inputQueue = new List<KeyCode>();
-        private int queueSize = 5;
 
         private InputHandler inputHandler;
         private UpComboCommand upComboCommand = new UpComboCommand();
