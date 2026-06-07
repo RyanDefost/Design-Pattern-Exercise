@@ -32,12 +32,12 @@ namespace Project.GameLogic.UIInterface
             this.elementInfoImage = this.userInterface.AddPanel(
                 Vector2.zero,
                 Vector3.one,
-                new Vector4(0f, 0f, 0f, 0f)
+                new Vector4(0.5f, 0f, 0.5f, 0f)
             );
             
             image = this.elementInfoImage;
                 image.sprite = Resources.Load<Sprite>("Sprites/ElementType");
-                image.rectTransform.localPosition = new Vector3(0, -300, 0f);
+                image.rectTransform.localPosition = new Vector3(0f, 0f, 0f);
                 image.rectTransform.localScale = new Vector3(6f, 6f, 6f);
         }
     }

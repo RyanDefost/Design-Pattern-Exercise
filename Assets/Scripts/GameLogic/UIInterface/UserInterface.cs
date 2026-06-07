@@ -40,6 +40,7 @@ namespace Project.GameLogic.UIInterface
             //CanvasScaler
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             canvasScaler.referenceResolution = new Vector2(1920, 1080);
+            canvasScaler.matchWidthOrHeight = 1;
             
             return canvas;
         }
