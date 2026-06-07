@@ -35,7 +35,7 @@ namespace Project.GameLogic.UIInterface
             this.spellBookBackground = this.userInterface.AddPanel(
                 Vector2.zero,
                 Vector3.one,
-                new Vector4(0.35f, 0, 0.65f, 0.65f)
+                new Vector4(0.35f, 0, 0.65f, 0.43f)
             );
 
             var image = this.spellBookBackground;
@@ -45,12 +45,13 @@ namespace Project.GameLogic.UIInterface
                 "SPELLS",
                 Vector2.zero,
                 Vector3.one,
-                new Vector4(0.35f, 0, 0.65f, 0.65f)
+                new Vector4(0.35f, 0, 0.65f, 0.38f)
             );
             
             var text = this.TextSpellElements;
                 text.color = Color.black;
-                text.text = "Spell of Healing || U/D/U/U \n Spell of Healing || U/D/U/U \n Spell of Healing || U/D/U/U \n Spell of Healing || U/D/U/U";
+                text.fontWeight = FontWeight.Bold;
+                text.text = "Spell of Healing || U/D/U/U \n \n Spell of Strength || D/L/R/R \n \n Spell of Aerial Damage || L/L/R/L \n \n Spell of Speed || R/R/L/L";
                 text.horizontalAlignment = HorizontalAlignmentOptions.Center;
                 text.enabled = false;
         }

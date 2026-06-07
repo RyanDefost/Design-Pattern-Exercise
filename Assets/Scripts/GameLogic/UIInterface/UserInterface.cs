@@ -35,6 +35,7 @@ namespace Project.GameLogic.UIInterface
             //Canvas
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
             canvas.worldCamera = Camera.main;
+            canvas.sortingOrder = 2;
             
             //CanvasScaler
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;

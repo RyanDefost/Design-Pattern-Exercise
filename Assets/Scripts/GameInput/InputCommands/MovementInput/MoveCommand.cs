@@ -1,4 +1,5 @@
 ﻿using System;
+using Project.GameLogic.Systems;
 using UnityEngine;
 
 namespace Project.GameInput.MovementInput
@@ -8,7 +9,10 @@ namespace Project.GameInput.MovementInput
         public Action OnExecute { get; set; }
 
         private Vector2 direction = Vector2.zero;
+        private Vector2 lastStep = Vector2.one;
 
+        private CollisionSystem collisionSystem = ISingleton<CollisionSystem>.Instance();
+        
         public MoveCommand(Vector2 direction)
         {
             this.direction = direction;
@@ -19,8 +23,11 @@ namespace Project.GameInput.MovementInput
         {
             var actor = (Player.Player)inputHandler.inputReceiver;
 
-            actor.AddPosition(direction * actor.speed * Time.deltaTime);
-
+            if (!collisionSystem.CheckCollisions(actor.CollisionComponent))
+                actor.AddPosition(direction * actor.speed * Time.deltaTime);
+            else
+                actor.AddPosition(-(direction * actor.speed * Time.deltaTime)*2);
+                            
             this.OnExecute?.Invoke();
         }
     }

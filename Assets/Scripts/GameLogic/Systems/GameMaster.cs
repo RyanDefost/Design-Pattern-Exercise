@@ -15,6 +15,8 @@ namespace Project.GameLogic.Systems
         public Action OnUpdate;
 
         private UserInterface userInterface;
+        private LevelData levelData;
+        
         private MinionManager minionManager;
         private PlayerManager playerManager;
 
@@ -32,6 +34,8 @@ namespace Project.GameLogic.Systems
         private void InstaniatieScripts()
         {
             this.userInterface = new UserInterface();
+            this.levelData = new  LevelData();
+            
             this.minionManager = new MinionManager();
             this.playerManager = new PlayerManager();
 

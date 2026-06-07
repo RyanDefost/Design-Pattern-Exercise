@@ -11,7 +11,8 @@ namespace Project.GameLogic.EntityComponents
     public class CollisionComponent
     {
         public Entity actor { get; }
-
+        public Bounds Bounds => new (actor.GetPosition(), actor.GetScale()/2);
+        
         public float sizeMultiplier = 1;
 
         public List<CollisionComponent> colliding = new List<CollisionComponent>();
@@ -35,15 +36,12 @@ namespace Project.GameLogic.EntityComponents
             Vector2 pos2 = actor.GetPosition();
 
             //AABB-collision
-            if (pos1.x < pos2.x + collider.actor.GetScale().x / 2 &&
-                pos1.x + actor.GetScale().x / 2 > pos2.x &&
-                pos1.y < pos2.y + collider.actor.GetScale().y / 2 &&
-                pos1.y + actor.GetScale().y / 2 > pos2.y)
+            if (Bounds.Intersects(collider.Bounds))
             {
                 this.colliding.Add(collider);
                 return true;
             }
-
+            
             this.colliding.Remove(collider);
             return false;
         }

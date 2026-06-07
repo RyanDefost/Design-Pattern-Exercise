@@ -40,7 +40,7 @@ namespace Project.Player
             player2.speed = 4;
             player2.spawnPosition = new Vector2(5, 0);
             player2.movementInput = new KeyCode[4] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
-            player2.castInput = new KeyCode[5] { KeyCode.Keypad5, KeyCode.Keypad2, KeyCode.Keypad1, KeyCode.Keypad3, KeyCode.KeypadEnter };
+            player2.castInput = new KeyCode[5] { KeyCode.Keypad5, KeyCode.Keypad2, KeyCode.Keypad1, KeyCode.Keypad3, KeyCode.Keypad0 };
             player2.uiPosition = new Vector2(1440f, 950f);
             SpawnPlayer(player2);
 
