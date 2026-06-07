@@ -3,59 +3,68 @@ using System.Collections.Generic;
 
 namespace Project.ObjectPool
 {
+    /// <summary>
+    /// Class for efficiently storing instances of T.
+    /// </summary>
+    /// <typeparam name="T"> Type of the stored instances.</typeparam>
     public class ObjectPool<T> where T : IPoolable
     {
-        private List<T> _activePool = new List<T>();
-        private List<T> _inactivePool = new List<T>();
+        private List<T> activePool = new List<T>();
+        private List<T> inactivePool = new List<T>();
 
+        // Adds a new T instance to the ObjectPool.
         public T AddObject()
         {
             T instance = (T)Activator.CreateInstance(typeof(T));
-            _inactivePool.Add(instance);
+            this.inactivePool.Add(instance);
 
             return instance;
         }
 
+        // Activates an object from the inactivePool.
         public T ActivateObject(T item)
         {
             item.OnEnableObject();
             item.Active = true;
 
-            if (_inactivePool.Contains(item))
+            if (this.inactivePool.Contains(item))
             {
-                _inactivePool.Remove(item);
+                this.inactivePool.Remove(item);
             }
-            _activePool.Add(item);
+            this.activePool.Add(item);
             return item;
         }
 
+        // Deactivates an object from the activePool.
         public T DeactivateObject(T item)
         {
             item.OnDisableObject();
             item.Active = false;
 
-            if (_activePool.Contains(item))
+            if (this.activePool.Contains(item))
             {
-                _activePool.Remove(item);
+                this.activePool.Remove(item);
             }
-            _inactivePool.Add(item);
+            this.inactivePool.Add(item);
             return item;
         }
 
+        // Checks if there are any instances of T to activate and makes a new one when needed.
         public T RequestObject()
         {
-            if (_inactivePool.Count > 0)
+            if (this.inactivePool.Count > 0)
             {
-                return ActivateObject(_inactivePool[0]);
+                return ActivateObject(this.inactivePool[0]);
             }
             return ActivateObject(AddObject());
         }
 
+        // Gets a list of all active and deactivate items.
         public List<T> GetAllItems()
         {
             List<T> ItemList = new List<T>();
-            ItemList.AddRange(_activePool);
-            ItemList.AddRange(_inactivePool);
+            ItemList.AddRange(this.activePool);
+            ItemList.AddRange(this.inactivePool);
 
             return ItemList;
         }

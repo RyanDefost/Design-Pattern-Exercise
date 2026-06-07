@@ -1,16 +1,18 @@
 ﻿namespace Project.Summon.Decorator
 {
+    /// <summary>
+    /// Base class for decorators that set values and references to the minionData.
+    /// </summary>
     public abstract class MinionDecorator
     {
-        public int Damage { get; set; }
-        public int Defense { get; set; }
+        protected MinionType minionType;
 
-        public MinionDecorator(int damage = 1, int defense = 1)
+        public MinionDecorator(MinionType minionType)
         {
-            Damage = damage;
-            Defense = defense;
+            this.minionType = minionType;
         }
 
-        public abstract Minion Decorate(Minion minion);
+        //Decorates the MinionData with the correlation values.
+        public abstract MinionData Decorate(MinionData minionData);
     }
 }

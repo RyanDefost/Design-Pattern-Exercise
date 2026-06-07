@@ -7,11 +7,15 @@ namespace Project.GameInput
     {
         public Action OnExecute { get; set; }
 
+        //Executes when the correlating input has been given inside the InputHandler.
         public void Execute(InputHandler inputHandler)
         {
-            inputHandler.inputQueue.SetCurrentQueue();
+            var actor = (InputQueue)inputHandler.inputReceiver;
+
+            actor.SetCurrentQueue();
 
             Debug.Log("ENTER Command");
+            OnExecute?.Invoke();
         }
     }
 }

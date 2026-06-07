@@ -1,70 +1,72 @@
-﻿using Project.GameInput;
+﻿using Project.GameLogic.ServiceLocator;
+using Project.GameLogic.Systems;
 using Project.ObjectPool;
-using Project.Summon.Decorator;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Summon
 {
-
-    public class MinionManager : MonoBehaviour
+    /// <summary>
+    /// Manages all Minions in the game and unpdates all the logic.
+    /// </summary>
+    public class MinionManager : GameBehaviour
     {
         public List<Minion> minions { get; private set; }
 
-        [SerializeField] private List<KeyCode> _spawnCode = new List<KeyCode>();
-
-        private InputQueue _inputQueue = new InputQueue();
         private ObjectPool<Minion> objectPool = new ObjectPool<Minion>();
-        private ObjectSpawner<Minion> objectSpawner = new ObjectSpawner<Minion>();
 
-        public void Awake()
+        public MinionManager()
         {
-            _inputQueue.OnSetCurrentQueue += CheckQueue;
+            MultiServiceLocator.Provide<MinionManager>(this);
         }
 
-        private void Update()
+        // Updates the Minions.
+        public override void Update()
         {
-            _inputQueue.UpdateQueue();
+            UpdateMinions();
         }
 
-        private void CheckQueue()
+        // Creates a new instance of MinionData and assigns this to a Minion from the ObjectPool.
+        public void CreateMinion(MinionCreator minionCreator, List<Vector2> spawnPositions)
         {
-            for (int i = 0; i < _inputQueue.CurrentQueue.Count - 1; i++)
+            MinionData minionData = new MinionData();
+            minionData = minionCreator.SetValues(minionData);
+
+            for (int i = 0; i < minionData.platoonSize; i++)
             {
-                if (_inputQueue.CurrentQueue[i] != _spawnCode[i]) return;
+                minionData.spawnOffset = spawnPositions[i];
+                ActivateMinion(minionData);
             }
-            ActivateMinion();
         }
 
-        public void ActivateMinion()
+        // Activates the minion with the given minionData.
+        public void ActivateMinion(MinionData minionData)
         {
-            Minion minion = objectPool.RequestObject();
-
-            MinionAirDecorator airDecorator = new MinionAirDecorator(5, 5);
-            minion = airDecorator.Decorate(minion);
-
-            StartCoroutine(test(minion)); //TEMMP
-            //objectSpawner.SpawnObject(minion, Vector3.zero);
+            Minion minion = this.objectPool.RequestObject();
+            minion.SetData(minionData);
         }
 
-        //REMOVE FUNCTION
-        private IEnumerator test(Minion minion)
-        {
-            yield return new WaitForSeconds(5);
-            DeactivateMinion(minion);
-        }
-
+        // Deactivates the given minion.
         public void DeactivateMinion(Minion minion)
         {
-            objectPool.DeactivateObject(minion);
-
-            Debug.Log("DEACTIVATE: " + minion.Damage);
+            this.objectPool.DeactivateObject(minion);
         }
 
-        public void GetActiveMinion(Minion minion)
+        // Gets all current minions in the game.
+        public List<Minion> GetAllMinions()
         {
-            objectPool.GetAllItems();
+            return this.objectPool.GetAllItems();
+        }
+
+        private void UpdateMinions()
+        {
+            foreach (var minion in GetAllMinions())
+            {
+                if (minion.Active)
+                {
+                    minion.UpdateMinion();
+                }
+            }
         }
     }
 }

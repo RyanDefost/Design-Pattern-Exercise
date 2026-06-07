@@ -1,0 +1,84 @@
+﻿using Project.GameInput;
+using Project.Player;
+using Project.Summon.Decorator;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Project.Summon
+{
+    /// <summary>
+    /// Sets minionData bases on the given input.
+    /// </summary>
+    public class MinionCreator
+    {
+        private ICaster caster;
+        private InputQueue inputQueue;
+
+        private Dictionary<KeyCode, MinionType> typing;
+
+        public MinionCreator(InputQueue inputQueue, ICaster caster)
+        {
+            this.caster = caster;
+            this.inputQueue = inputQueue;
+
+            this.typing = new Dictionary<KeyCode, MinionType>
+            {
+                { KeyCode.UpArrow,      MinionType.WATER },
+                { KeyCode.DownArrow,    MinionType.EARTH },
+                { KeyCode.LeftArrow,    MinionType.FIRE },
+                { KeyCode.RightArrow,   MinionType.AIR }
+            };
+        }
+
+        // Sets minionData bases on the given input.
+        public MinionData SetValues(MinionData minionData)
+        {
+            var QueueOrder = this.inputQueue.CurrentQueue;
+
+            //Ability
+            foreach (var item in typing)
+            {
+                if (QueueOrder[0] == item.Key)
+                {
+                    var abilityDecorator = new MinionAbilityDecorator(item.Value);
+                    minionData = abilityDecorator.Decorate(minionData);
+                }
+            }
+            
+            //body
+            foreach (var item in typing)
+            {
+                if (QueueOrder[1] == item.Key)
+                {
+                    var bodyDecorator = new MinionBodyDecorator(item.Value);
+                    minionData = bodyDecorator.Decorate(minionData);
+                }
+            }
+            
+            //OnDie / OnSpawn
+            foreach (var item in typing)
+            {
+                if (QueueOrder[2] == item.Key)
+                {
+                    var stabilityDecorator = new MinionStabilityDecorator(item.Value);
+                    minionData = stabilityDecorator.Decorate(minionData);
+                }
+            }
+            
+            //Amount
+            foreach (var item in typing)
+            {
+                if (QueueOrder[3] == item.Key)
+                {
+                    var amountDecorator = new MinionAmountDecorator(item.Value);
+                    minionData = amountDecorator.Decorate(minionData);
+                }
+            }
+
+            minionData.caster = this.caster;
+
+            return minionData;
+        }
+    }
+
+}

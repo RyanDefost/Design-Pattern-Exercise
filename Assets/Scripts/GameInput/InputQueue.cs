@@ -4,61 +4,78 @@ using UnityEngine;
 
 namespace Project.GameInput
 {
-    public class InputQueue
+    /// <summary>
+    /// Keeps track of the last group of inputs give by its InputHandler.
+    /// </summary>
+    public class InputQueue : IInputReceiver
     {
         public List<KeyCode> CurrentQueue { get; private set; }
         public Action OnSetCurrentQueue;
 
+        private int queueSize = 4;
+        private List<KeyCode> inputQueue = new List<KeyCode>();
+
         private InputHandler inputHandler;
+        private UpComboCommand upComboCommand = new UpComboCommand();
+        private DownComboCommand downComboCommand = new DownComboCommand();
+        private LeftComboCommand leftComboCommand = new LeftComboCommand();
+        private RightComboCommand rightComboCommand = new RightComboCommand();
+        private EnterComboCommand enterComboCommand = new EnterComboCommand();
 
-        private List<KeyCode> _inputQueue = new List<KeyCode>();
-        private int _queueSize = 5;
 
-        public InputQueue()
+        public InputQueue(KeyCode[] castInput)
         {
-            inputHandler = new InputHandler(this);
+            this.inputHandler = new InputHandler(this);
 
-            TryAssignAllQueueable();
+            this.inputHandler.BindInputToCommand(castInput[0], upComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[1], downComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[2], leftComboCommand);
+            this.inputHandler.BindInputToCommand(castInput[3], rightComboCommand);
+
+            this.inputHandler.BindInputToCommand(castInput[4], enterComboCommand);
         }
 
-        public void UpdateQueue()
+        // Updates the InputHandler to check for input.
+        public void UpdateInputQueue()
         {
             inputHandler.HandleInput();
         }
 
+        // Saves an input to the list of Queued inputs.
         public void SaveInputToQueue(KeyCode key)
         {
-            _inputQueue.Add(key);
+            this.inputQueue.Add(key);
             RemoveLastInputFromQueue();
         }
 
+        // Removes the last input that is currently in the queue.
         public void RemoveLastInputFromQueue()
         {
-            while (_inputQueue.Count > _queueSize)
+            while (this.inputQueue.Count > this.queueSize)
             {
-                _inputQueue.RemoveAt(0);
+                this.inputQueue.RemoveAt(0);
             }
         }
 
+        // Activates and resets the Queue and sends an Action that the Queue is used.
         public void SetCurrentQueue()
         {
-            if (_inputQueue.Count <= 0) return;
-            if (CurrentQueue == null) CurrentQueue = new List<KeyCode>();
+            if (this.inputQueue.Count <= 0) return;
+            if (CurrentQueue == null) this.CurrentQueue = new List<KeyCode>();
 
-            CurrentQueue.Clear();
-            CurrentQueue.AddRange(_inputQueue);
+            this.CurrentQueue.Clear();
+            this.CurrentQueue.AddRange(this.inputQueue);
 
-            _inputQueue.Clear();
+            this.inputQueue.Clear();
 
-            Debug.Log("SETTING C_QUEUE: " + CurrentQueue);
-            OnSetCurrentQueue?.Invoke();
+            this.OnSetCurrentQueue?.Invoke();
         }
 
         private void TryAssignAllQueueable()
         {
-            if (inputHandler == null) return;
+            if (this.inputHandler == null) return;
 
-            foreach (var keyCommand in inputHandler.GetKeyCommands())
+            foreach (var keyCommand in this.inputHandler.GetKeyCommands())
             {
                 if (keyCommand.command is IQueueable)
                 {
