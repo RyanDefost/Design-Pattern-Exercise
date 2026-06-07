@@ -13,6 +13,8 @@ namespace Project.GameLogic
         public Obstacle(Vector2 position, Vector2 scale, Color color)
         {
             this.spriteRenderer.color = color;
+            this.gameObject.name = "Obstacle";
+            
             this.SetPosition(position);
             this.SetScale(scale);
             

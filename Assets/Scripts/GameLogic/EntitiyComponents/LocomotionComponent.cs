@@ -31,7 +31,6 @@ namespace Project.GameLogic
 
             if (actor.CollisionComponent.colliding.Count > 0)
             {
-                Debug.Log("TRY MOVE");
                 actor.Entity.GameObject.transform.Translate(-step);
             }
         }
