@@ -1,4 +1,5 @@
-﻿using Project.GameLogic.Systems;
+﻿using Project.GameLogic.EntityComponents;
+using Project.GameLogic.Systems;
 using Project.Player;
 using UnityEngine;
 
@@ -19,8 +20,9 @@ namespace Project.Summon.Abilities
 
         public void SetDamage(Minion minion)
         {
-            foreach (var collider in collisionSystem.Colliders)
+            for (int i = 0; i < collisionSystem.Colliders.Count; i++)
             {
+                CollisionComponent collider =  collisionSystem.Colliders[i];
                 float distance = Vector2.Distance(minion.GetPosition(), collider.actor.GetPosition());
 
                 if (distance >= minion.minionData.areaOfEffect
