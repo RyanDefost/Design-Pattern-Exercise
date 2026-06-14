@@ -15,7 +15,7 @@ namespace Project.GameLogic.UIInterface
         {
             this.userInterface = MultiServiceLocator.GetService<UserInterface>();
             
-            SetupUI();
+            //SetupUI();
         }
 
         private void SetupUI()
